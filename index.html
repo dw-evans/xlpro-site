@@ -1,0 +1,548 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation - Cursor</title>
+    
+    <script defer src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://unpkg.com/@headlessui/react@1.7.18/dist/headlessui.production.min.js"></script>
+    
+    <link rel="stylesheet" href="/static/css/main.css?v=2">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="/static/css/markdown.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/marked@4.3.0/marked.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-go.min.js"></script>
+    <style>
+        [x-cloak] { display: none !important; }
+        .font-jetbrains {
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+    </style>
+    <script>
+        
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col" x-data="{ mobileMenuOpen: false, darkMode: false }" x-init="
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        darkMode = true;
+        document.documentElement.classList.add('dark');
+    } else {
+        darkMode = false;
+        document.documentElement.classList.remove('dark');
+    }
+    $watch('darkMode', value => {
+        if (value) {
+            document.documentElement.classList.add('dark');
+            localStorage.theme = 'dark';
+        } else {
+            document.documentElement.classList.remove('dark');
+            localStorage.theme = 'light';
+        }
+    });">
+    
+    
+<nav class="fixed top-0 left-0 right-0 bg-white dark:bg-gray-800 shadow-lg z-50">
+    <div class="max-w-6xl mx-auto px-4">
+        <div class="flex justify-between h-16">
+            <div class="flex">
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="/" class="text-xl font-bold text-gray-800 dark:text-white group">
+                        <span>xlpro</span>
+                        <span class="group-hover:animate-blink -ml-1">_
+                            <style>
+                                @keyframes blink {
+                                    0% { opacity: 1; }
+                                    1%, 50%{ opacity: 0; }
+                                    51%, 100%{ opacity: 1; }
+                                }
+                                .group-hover\:animate-blink {
+                                    animation: none;
+                                }
+                                .group:hover .group-hover\:animate-blink {
+                                    animation: blink 1s infinite;
+                                }
+                            </style>
+                        </span>
+                    </a>
+                </div>
+                <div class="hidden md:ml-6 md:flex md:space-x-8">
+                    <a href="/" class="inline-flex items-center px-1 pt-1 text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
+                        Home
+                    </a>
+                    <a href="/download" class="inline-flex items-center px-1 pt-1 text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
+                        Download
+                    </a>
+                    <a href="/examples" class="inline-flex items-center px-1 pt-1 text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
+                        Examples
+                    </a>
+                    <div class="relative inline-flex items-center" x-data="{ open: false }">
+                        <button @click="open = !open" 
+                                @keydown.escape.stop="open = false"
+                                @click.away="open = false"
+                                class="inline-flex items-center px-1 pt-1 text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
+                            <span>Documentation</span>
+                            <svg class="ml-2 h-5 w-5" :class="{ 'transform rotate-180': open }" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                        <div x-show="open" 
+                             x-cloak
+                             style="display: none;"
+                             x-transition:enter="transition ease-out duration-200"
+                             x-transition:enter-start="transform opacity-0 scale-95"
+                             x-transition:enter-end="transform opacity-100 scale-100"
+                             x-transition:leave="transition ease-in duration-75"
+                             x-transition:leave-start="transform opacity-100 scale-100"
+                             x-transition:leave-end="transform opacity-0 scale-95"
+                             class="absolute left-0 top-full mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-700 ring-1 ring-black ring-opacity-5">
+                            <div class="py-1">
+                                <a href="/docs/getting-started" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600">Getting Started</a>
+                                <a href="/docs/markdown-examples" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600">Markdown Reference</a>
+                                <a href="/docs/api" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600">API Documentation</a>
+                                <a href="/docs/tutorials" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600">Tutorials</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center">
+                    
+                    <button @click="darkMode = !darkMode" 
+                            class="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 rounded-md">
+                        
+                        <svg x-show="!darkMode" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        
+                        <svg x-show="darkMode" x-cloak class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            
+            <div class="-mr-2 flex items-center md:hidden">
+                <button @click="mobileMenuOpen = !mobileMenuOpen" 
+                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500">
+                    <span class="sr-only">Open main menu</span>
+                    <svg class="h-6 w-6" x-show="!mobileMenuOpen" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <svg class="h-6 w-6" x-show="mobileMenuOpen" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div x-show="mobileMenuOpen" class="md:hidden bg-white dark:bg-gray-800">
+        <div class="pt-2 pb-3 space-y-1">
+            <a href="/" class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 dark:text-gray-200 hover:text-gray-800 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-500">Home</a>
+            <a href="/download" class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 dark:text-gray-200 hover:text-gray-800 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-500">Download</a>
+            <a href="/docs" class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 dark:text-gray-200 hover:text-gray-800 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-500">Documentation</a>
+        </div>
+        
+    </div>
+</nav>
+
+
+    
+    <main class="pt-16 relative flex-grow">
+        
+<div class="relative isolate">
+    
+    <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
+        <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"></div>
+    </div>
+
+    
+    <div class="relative z-10 w-full h-[700px]">
+        
+        <div class="absolute inset-0 w-full">
+            <img class="h-full w-full object-cover" src="https://images.unsplash.com/photo-1557683316-973673baf926?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2089&q=80" alt="Abstract background">
+            
+            <div class="absolute inset-0 bg-black/50"></div>
+        </div>
+
+        
+        <div class="relative h-full flex items-center">
+            <div class="mx-auto max-w-full w-full px-8">
+                <div class="mx-auto max-w-6xl text-center">
+                    
+                    <div class="bg-black/10 p-8 rounded-lg backdrop-blur-sm">
+                        <h1 class="text-6xl font-bold tracking-tight text-white sm:text-8xl mb-4">Python Powered Excel</h1>
+                    </div>
+                    
+                    <div class="py-12">
+                        <p class="text-lg leading-8 text-white/50">A lightweight Python wrapper for Excel.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <div class="p-8">
+    </div>
+
+    <div class="max-w-6xl mx-auto px-5">
+
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4 group">
+                <span>xlpro</span>
+                <span class="group-hover:animate-blink -ml-1.5">_
+                    <style>
+                        @keyframes blink {
+                            0% { opacity: 1; }
+                            1%, 50%{ opacity: 0; }
+                            51%, 100%{ opacity: 1; }
+                        }
+                        .group-hover\:animate-blink {
+                            animation: none;
+                        }
+                        .group:hover .group-hover\:animate-blink {
+                            animation: blink 1s infinite;
+                        }
+                    </style>
+                </span>
+            </h1>
+            <p class="text-xl text-gray-600 dark:text-gray-300">
+                <span id="typed-text">&nbsp;</span>
+                <span class="animate-blink -ml-1">_
+                    <style>
+                        @keyframes blink {
+                            0% { opacity: 1; }
+                            1%, 50%{ opacity: 0; }
+                            51%, 100%{ opacity: 1; }
+                        }
+                        .animate-blink {
+                            animation: blink 1s 6;
+                        }
+                    </style>
+                </span>
+            </p>
+
+            <script>
+                const text = "Our solution to deploying business logic quickly for your data driven processes.";
+                let i = 0;
+                setTimeout(() => {
+                    const typeWriter = () => {
+                        if (i < text.length) {
+                            document.getElementById("typed-text").innerHTML = text.slice(0, i + 1);
+                            i++;
+                            setTimeout(typeWriter, 8);
+                        }
+                    };
+                    typeWriter();
+                }, 3000);
+            </script>
+
+            
+        </div>
+
+
+        <div class="my-12">
+            <div class="relative overflow-hidden bg-white dark:bg-gray-800 rounded-lg shadow-md group">
+                
+                <div x-data="{ expanded: false }" @click="expanded = !expanded">
+                    <div class="relative h-32 overflow-hidden transition-all duration-300" :class="{ 'h-96': expanded }">
+                        <img src="https://images.unsplash.com/photo-1557683316-973673baf926?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2089&q=80" 
+                             alt="Background image" 
+                             class="absolute inset-0 w-full h-full object-cover transform transition-transform duration-300 z-0"
+                             :class="{ 'scale-105': expanded }">
+                        
+                        <div class="absolute inset-0 bg-gradient-to-b from-gray-800/30 to-gray-800/80 z-10 transition-opacity duration-300"
+                             :class="{ 'opacity-0': expanded, 'opacity-100': !expanded }"></div>
+                    </div>
+                    
+                    <div class="p-6">
+                        <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-2">Python Powered Spreadsheets</h2>
+                        
+                        
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Develop your data pipelines in Python and deploy them to Excel.</p>
+                        
+                        <div class="overflow-hidden transform transition-all duration-300 ease-in-out"
+                             :class="{ 'max-h-[200px] translate-y-0 opacity-100': expanded, 'max-h-0 translate-y-full opacity-0': !expanded }">
+                            <p class="text-gray-500 dark:text-gray-400 text-sm">Our solution seamlessly integrates Python's powerful data processing capabilities with Excel's familiar interface. Whether you're handling complex calculations, data analysis, or automation tasks, our platform provides the perfect bridge between these two powerful tools.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="my-12">
+            <div class="relative overflow-hidden bg-white dark:bg-gray-800 rounded-lg shadow-md group">
+                
+                <div x-data="{ expanded: false }" @click="expanded = !expanded">
+                    <div class="relative h-32 overflow-hidden transition-all duration-300" :class="{ 'h-96': expanded }">
+                        <img src="https://images.unsplash.com/photo-1557683316-973673baf926?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2089&q=80" 
+                             alt="Background image" 
+                             class="absolute inset-0 w-full h-full object-cover transform transition-transform duration-300 z-0"
+                             :class="{ 'scale-105': expanded }">
+                        
+                        <div class="absolute inset-0 bg-gradient-to-b from-gray-800/30 to-gray-800/80 z-10 transition-opacity duration-300"
+                             :class="{ 'opacity-0': expanded, 'opacity-100': !expanded }"></div>
+                    </div>
+                    
+                    <div class="p-6">
+                        <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-2">Hassle-Free Ditribution</h2>
+                        
+                        
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Not everyone is a developer. We make it easy to distribute your Python code to Excel users.</p>
+                        
+                        <div class="overflow-hidden transform transition-all duration-300 ease-in-out"
+                             :class="{ 'max-h-[200px] translate-y-0 opacity-100': expanded, 'max-h-0 translate-y-full opacity-0': !expanded }">
+                            <p class="text-gray-500 dark:text-gray-400 text-sm">Our solution seamlessly integrates Python's powerful data processing capabilities with Excel's familiar interface. Whether you're handling complex calculations, data analysis, or automation tasks, our platform provides the perfect bridge between these two powerful tools.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="my-12">
+            <div class="relative overflow-hidden bg-white dark:bg-gray-800 rounded-lg shadow-md group">
+                
+                <div x-data="{ expanded: false }" @click="expanded = !expanded">
+                    <div class="relative h-32 overflow-hidden transition-all duration-300" :class="{ 'h-96': expanded }">
+                        <img src="https://images.unsplash.com/photo-1557683316-973673baf926?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2089&q=80" 
+                             alt="Background image" 
+                             class="absolute inset-0 w-full h-full object-cover transform transition-transform duration-300 z-0"
+                             :class="{ 'scale-105': expanded }">
+                        
+                        <div class="absolute inset-0 bg-gradient-to-b from-gray-800/30 to-gray-800/80 z-10 transition-opacity duration-300"
+                             :class="{ 'opacity-0': expanded, 'opacity-100': !expanded }"></div>
+                    </div>
+                    
+                    <div class="p-6">
+                        <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-2">Privacy First</h2>
+                        
+                        
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">No cloud services or fancy integrations. Write and keep your code offline, bridge the gap between your Python code and Excel with minimal effort or commitment.</p>
+                        
+                        <div class="overflow-hidden transform transition-all duration-300 ease-in-out"
+                             :class="{ 'max-h-[200px] translate-y-0 opacity-100': expanded, 'max-h-0 translate-y-full opacity-0': !expanded }">
+                            <p class="text-gray-500 dark:text-gray-400 text-sm">Our solution seamlessly integrates Python's powerful data processing capabilities with Excel's familiar interface. Whether you're handling complex calculations, data analysis, or automation tasks, our platform provides the perfect bridge between these two powerful tools.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="my-12">
+            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">Features</h2>
+            <div class="my-4 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+                <div x-data="{ activeFeature: null }" class="grid md:grid-cols-3 gap-6">
+                    <div class="p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition cursor-pointer"
+                         @click="activeFeature = activeFeature === 'integration' ? null : 'integration'">
+                        <h3 class="font-semibold mb-2 text-gray-900 dark:text-white">One-Click Installation</h3>
+                        <p class="text-gray-600 dark:text-gray-300">Simple installation and setup process for all your employees using Excel</p>
+                        <div x-show="activeFeature === 'integration'"
+                             x-transition:enter="transition ease-out duration-200"
+                             x-transition:enter-start="opacity-0"
+                             x-transition:enter-end="opacity-100"
+                             class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                            Simple installation and setup process for all your developers and users.
+                        </div>
+                    </div>
+                    <div class="p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition cursor-pointer"
+                         @click="activeFeature = activeFeature === 'updates' ? null : 'updates'">
+                        <h3 class="font-semibold mb-2 text-gray-900 dark:text-white">Simple Distribution</h3>
+                        <p class="text-gray-600 dark:text-gray-300">Deploy UDFs and Subroutines to Excel using Python.</p>
+                        <div x-show="activeFeature === 'updates'"
+                             x-transition:enter="transition ease-out duration-200"
+                             x-transition:enter-start="opacity-0"
+                             x-transition:enter-end="opacity-100"
+                             class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                             No commitment to bespoke code. You have the freedom to choose when and how your code is deployed and to leave xlpro if you are not happy with the results.
+                        </div>
+                    </div>
+                    <div class="p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition cursor-pointer"
+                         @click="activeFeature = activeFeature === 'support' ? null : 'support'">
+                        <h3 class="font-semibold mb-2 text-gray-900 dark:text-white">Automate your B</h3>
+                        <p class="text-gray-600 dark:text-gray-300">Develop and deploy your business logic at speed using the full power of Python.</p>
+                        <div x-show="activeFeature === 'support'"
+                             x-transition:enter="transition ease-out duration-200"
+                             x-transition:enter-start="opacity-0"
+                             x-transition:enter-end="opacity-100"
+                             class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                             Use our VBA-transpiled type libraries for all your COM applications including Word, PowerPoint, Outlook, Excel, Access, SolidWorks, Creo, Minitab and more.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">Download</h2>
+                <p class="text-gray-600 dark:text-gray-300 mb-4">Get the latest version of our software with enhanced features and improvements.</p>
+                <div x-data="{ showDetails: false }" class="space-y-4">
+                    <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded">
+                        <div>
+                            <h3 class="font-semibold text-gray-900 dark:text-white">Latest Version</h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">v1.0.0</p>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button @click="showDetails = !showDetails"
+                                    class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                                <span class="sr-only">Show details</span>
+                                <svg class="h-5 w-5" :class="{ 'transform rotate-180': showDetails }"
+                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd"
+                                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                          clip-rule="evenodd"/>
+                                </svg>
+                            </button>
+                            <a href="/download"
+                               class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:focus:ring-offset-gray-800"
+                               hx-boost="true">
+                                Download
+                            </a>
+                        </div>
+                    </div>
+                    <div x-show="showDetails" 
+                         x-transition:enter="transition ease-out duration-200"
+                         x-transition:enter-start="opacity-0 transform -translate-y-2"
+                         x-transition:enter-end="opacity-100 transform translate-y-0"
+                         x-transition:leave="transition ease-in duration-150"
+                         x-transition:leave-start="opacity-100 transform translate-y-0"
+                         x-transition:leave-end="opacity-0 transform -translate-y-2"
+                         class="bg-gray-50 dark:bg-gray-700 p-4 rounded">
+                        <h4 class="font-medium text-gray-900 dark:text-white mb-2">Release Notes</h4>
+                        <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-300">
+                            <li>• Enhanced performance and stability</li>
+                            <li>• New feature implementations</li>
+                            <li>• Bug fixes and improvements</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">Documentation</h2>
+                <p class="text-gray-600 dark:text-gray-300 mb-4">Explore our comprehensive documentation to get started.</p>
+                <div x-data="{ activeTab: 'getting-started' }" class="space-y-4">
+                    <div class="border-b border-gray-200 dark:border-gray-700">
+                        <nav class="-mb-px flex space-x-8">
+                            <button @click="activeTab = 'getting-started'"
+                                    :class="{ 'border-primary-500 text-primary-600 dark:text-primary-400': activeTab === 'getting-started',
+                                            'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600': activeTab !== 'getting-started' }"
+                                    class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                                Getting Started
+                            </button>
+                            <button @click="activeTab = 'api'"
+                                    :class="{ 'border-primary-500 text-primary-600 dark:text-primary-400': activeTab === 'api',
+                                            'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600': activeTab !== 'api' }"
+                                    class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                                API
+                            </button>
+                            <button @click="activeTab = 'tutorials'"
+                                    :class="{ 'border-primary-500 text-primary-600 dark:text-primary-400': activeTab === 'tutorials',
+                                            'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600': activeTab !== 'tutorials' }"
+                                    class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                                Tutorials
+                            </button>
+                        </nav>
+                    </div>
+                    <div x-show="activeTab === 'getting-started'" class="space-y-2">
+                        <a href="/docs/getting-started/installation" 
+                           class="block p-3 bg-gray-50 dark:bg-gray-700 rounded hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 transition">
+                            Installation Guide
+                        </a>
+                        <a href="/docs/getting-started/quickstart" 
+                           class="block p-3 bg-gray-50 dark:bg-gray-700 rounded hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 transition">
+                            Quick Start Guide
+                        </a>
+                    </div>
+                    <div x-show="activeTab === 'api'" class="space-y-2">
+                        <a href="/docs/api/reference" 
+                           class="block p-3 bg-gray-50 dark:bg-gray-700 rounded hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 transition">
+                            API Reference
+                        </a>
+                        <a href="/docs/api/examples" 
+                           class="block p-3 bg-gray-50 dark:bg-gray-700 rounded hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 transition">
+                            Code Examples
+                        </a>
+                    </div>
+                    <div x-show="activeTab === 'tutorials'" class="space-y-2">
+                        <a href="/docs/tutorials/basics" 
+                           class="block p-3 bg-gray-50 dark:bg-gray-700 rounded hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 transition">
+                            Basic Tutorials
+                        </a>
+                        <a href="/docs/tutorials/advanced" 
+                           class="block p-3 bg-gray-50 dark:bg-gray-700 rounded hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 transition">
+                            Advanced Topics
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="my-12">
+
+        </div>
+
+        
+
+
+    </div>
+</div>
+
+    </main>
+
+    
+
+<footer class="bg-white dark:bg-gray-800 shadow-lg mt-auto">
+    <div class="container mx-auto px-4 py-6">
+        <p class="text-center text-gray-500 dark:text-gray-400">&copy; 2025 Dash Software Ltd. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>
