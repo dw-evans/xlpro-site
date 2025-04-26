@@ -1,6 +1,220 @@
 
 <!doctype html>
 <html lang="en" class="no-js">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Function to convert hex to RGB
+    function hexToRgb(hex) {
+        hex = hex.replace('#', '');
+        const bigint = parseInt(hex, 16);
+        const r = (bigint >> 16) & 255;
+        const g = (bigint >> 8) & 255;
+        const b = bigint & 255;
+        return [r, g, b];
+    }
+
+    // Function to convert RGB to HSL
+    function rgbToHsl(r, g, b) {
+        r /= 255;
+        g /= 255;
+        b /= 255;
+
+        const max = Math.max(r, g, b);
+        const min = Math.min(r, g, b);
+        let h, s, l = (max + min) / 2;
+
+        if (max === min) {
+            h = s = 0; // achromatic
+        } else {
+            const d = max - min;
+            s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+            switch (max) {
+                case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                case g: h = (b - r) / d + 2; break;
+                case b: h = (r - g) / d + 4; break;
+            }
+            h /= 6;
+        }
+
+        return [h * 360, s * 100, l * 100];  // HSL values
+    }
+
+    // Function to lighten/darken HSL color
+    function adjustLightness(h, s, l, amount) {
+        l = l + amount; // Adjust lightness by the given amount
+        l = Math.min(Math.max(0, l), 100); // Clamp lightness to 0-100
+        return `hsl(${h}, ${s}%, ${l}%)`;
+    }
+
+    // Function to get lighter and darker variants of a color
+    function getColorVariants(hexColor, lightnessAdjustment = 15) {
+      // Convert hex to RGB
+      const rgb = hexToRgb(hexColor);
+      
+      // Convert RGB to HSL
+      const [h, s, l] = rgbToHsl(...rgb);
+
+      // Calculate variants by adjusting the lightness
+      const lightVariant = adjustLightness(h, s, l, lightnessAdjustment);        // Lighten by lightnessAdjustment
+      const lighterVariant = adjustLightness(h, s, l, lightnessAdjustment * 2);  // More lightened
+      const lightestVariant = adjustLightness(h, s, l, lightnessAdjustment * 3);  // Maximum lightened
+
+      const darkVariant = adjustLightness(h, s, l, -lightnessAdjustment);         // Darken by lightnessAdjustment
+      const darkerVariant = adjustLightness(h, s, l, -(lightnessAdjustment * 2)); // More darkened
+      const darkestVariant = adjustLightness(h, s, l, -(lightnessAdjustment * 3)); // Maximum darkened
+
+      return {
+          light: lightVariant,
+          lighter: lighterVariant,
+          lightest: lightestVariant,
+          dark: darkVariant,
+          darker: darkerVariant,
+          darkest: darkestVariant
+      };
+  }
+    // Function to retrieve a color from the CSS variables
+    function getCssVarColor(varName) {
+        return getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+    }
+
+
+    window.onload = () => {
+      // Example of getting CSS variables for primary and accent colors
+      var primaryFgColor = getCssVarColor('--md-primary-fg-color');
+      var primaryBgColor = getCssVarColor('--md-primary-bg-color');
+      
+      var accentFgColor = getCssVarColor('--md-accent-fg-color');
+      var accentBgColor = getCssVarColor('--md-accent-bg-color');
+
+      var defaultFgColor = getCssVarColor('--md-default-fg-color');
+      var defaultBgColor = getCssVarColor('--md-default-bg-color');
+
+      // Get the lighter and darker variants of each color
+      var primaryFgVariants = getColorVariants(primaryFgColor);
+      var primaryBgVariants = getColorVariants(primaryBgColor);
+      var accentFgVariants = getColorVariants(accentFgColor);
+      var accentBgVariants = getColorVariants(accentBgColor);
+      var defaultFgVariants = getColorVariants(accentFgColor);
+      var defaultBgVariants = getColorVariants(accentBgColor);
+
+      console.log(primaryFgVariants)
+      console.log(primaryBgVariants)
+
+      console.log(accentFgVariants)
+      console.log(accentBgVariants)
+
+      console.log(defaultFgVariants)
+      console.log(defaultBgVariants)
+
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              
+              text: 'var(--md-default-fg-color)',
+              background: 'var(--md-default-bg-color)',
+              codebg: 'var(--md-code-bg-color)',
+              
+              md: {
+                primary: {
+                  fg: {
+                    DEFAULT: primaryFgColor,
+                    light: primaryFgVariants.light,
+                    lighter: primaryFgVariants.lighter,
+                    lightest: primaryFgVariants.lightest,
+                    dark: primaryFgVariants.dark,
+                    darker: primaryFgVariants.darker,
+                    darkest: primaryFgVariants.darkest,
+                  },
+                  bg: {
+                    DEFAULT: primaryBgColor,
+                    light: primaryBgVariants.light,
+                    lighter: primaryBgVariants.lighter,
+                    lightest: primaryBgVariants.lightest,
+                    dark: primaryBgVariants.dark,
+                    darker: primaryBgVariants.darker,
+                    darkest: primaryBgVariants.darkest,
+                  },
+                },
+
+                accent: {
+                  bg: {
+                    DEFAULT: accentBgColor,
+                    light: accentBgVariants.light,
+                    lighter: accentBgVariants.lighter,
+                    lightest: accentBgVariants.lightest,
+                    dark: accentBgVariants.dark,
+                    darker: accentBgVariants.darker,
+                    darkest: accentBgVariants.darkest,
+                  },
+                  fg: {
+                    DEFAULT: accentFgColor,
+                    light: accentFgVariants.light,
+                    lighter: accentFgVariants.lighter,
+                    lightest: accentFgVariants.lightest,
+                    dark: accentFgVariants.dark,
+                    darker: accentFgVariants.darker,
+                    darkest: accentFgVariants.darkest,
+                  }
+                },
+
+                default: {
+                  bg: {
+                    DEFAULT: defaultBgColor,
+                    light: 'var(--md-default-bg-color--light)',
+                    lighter: 'var(--md-default-bg-color--lighter)',
+                    lightest: 'var(--md-default-bg-color--lightest)',
+                    dark: defaultBgVariants.dark,
+                    darker: defaultBgVariants.darker,
+                    darkest: defaultBgVariants.darkest,
+                  },
+                  fg: {
+                    DEFAULT: defaultFgColor,
+                    light: 'var(--md-default-fg-color--light)',
+                    lighter: 'var(--md-default-fg-color--lighter)',
+                    lightest: 'var(--md-default-fg-color--lightest)',
+                    dark: defaultFgVariants.dark,
+                    darker: defaultFgVariants.darker,
+                    darkest: defaultFgVariants.darkest,
+                  }
+                },
+              },
+            },
+          },
+        }
+      }
+    }
+
+  </script>
+  <script defer src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/8.5.0/font/octicons.css">
+
+  <!-- <div class="text-md-accent-fg-darkest">
+    <code>TEST TEXT</code><span> TEST TEXT</span>
+  </div>
+
+  <div class="text-md-accent-fg-darker">
+    <code>TEST TEXT</code><span> TEST TEXT</span>
+  </div>
+  <div class="text-md-accent-fg-dark">
+    <code>TEST TEXT</code><span> TEST TEXT</span>
+  </div>
+  <div class="text-md-accent-fg">
+    <code>TEST TEXT</code><span> TEST TEXT</span>
+  </div>
+  <div class="text-md-accent-fg-light">
+    <code>TEST TEXT</code><span> TEST TEXT</span>
+  </div>
+  <div class="text-md-accent-fg-lighter">
+    <code>TEST TEXT</code><span> TEST TEXT</span>
+  </div>
+  <div class="text-md-accent-fg-lightest">
+    <code>TEST TEXT</code><span> TEST TEXT</span>
+   -->
+  
   <head>
     
       <meta charset="utf-8">
@@ -9,10 +223,6 @@
       
       
       
-        <link rel="prev" href="../../installation-home/">
-      
-      
-        <link rel="next" href="../md-example1/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -20,7 +230,7 @@
     
     
       
-        <title>Markdown Examples - My Docs</title>
+        <title>Markdown Examples - xlpro</title>
       
     
     
@@ -63,7 +273,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -82,13 +292,14 @@
     </div>
     
     
+    
       
 
   
 
-<header class="md-header md-header--shadow" data-md-component="header">
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="My Docs" class="md-header__button md-logo" aria-label="My Docs" data-md-component="logo">
+    <a href="../.." title="xlpro" class="md-header__button md-logo" aria-label="xlpro" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -102,7 +313,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            My Docs
+            xlpro
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -121,7 +332,7 @@
     
     
     
-    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
     
   
 </form>
@@ -175,15 +386,126 @@
     
   </nav>
   
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../download/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Download
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../getting-started/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Getting Started
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../reference/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../tutorials/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Tutorials
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
 </header>
     
     <div class="md-container" data-md-component="container">
       
       
         
-          
-        
       
+      <!-- home page override -->
       <main class="md-main" data-md-component="main">
         <div class="md-main__inner md-grid">
           
@@ -195,16 +517,18 @@
                     
 
 
+  
 
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="My Docs" class="md-nav__button md-logo" aria-label="My Docs" data-md-component="logo">
+    <a href="../.." title="xlpro" class="md-nav__button md-logo" aria-label="xlpro" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    My Docs
+    xlpro
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -221,7 +545,7 @@
   
   
   <span class="md-ellipsis">
-    Welcome to MkDocs
+    Home
     
   </span>
   
@@ -238,12 +562,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../../development-notes/" class="md-nav__link">
+      <a href="../../download/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Development Notes
+    Download
     
   </span>
   
@@ -281,143 +605,118 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../../installation-home/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Installation
     
-  </span>
-  
-
-      </a>
-    </li>
-  
-
     
       
-      
-  
-  
-    
-  
-  
-  
-    
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
-            
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../reference/" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
-    Markdown examples
+    Reference
     
   </span>
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+          </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_5">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
-            Markdown examples
+            Reference
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
               
-                
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
   
   
     
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
+    
       
         
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
           
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tutorials/" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
-    Markdown Examples
+    Tutorials
     
   </span>
   
 
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
-  
-  
-  <span class="md-ellipsis">
-    Markdown Examples
-    
-  </span>
-  
-
-      </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#info-warning-and-note-blocks" class="md-nav__link">
-    <span class="md-ellipsis">
-      Info, Warning, and Note Blocks
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#headers" class="md-nav__link">
-    <span class="md-ellipsis">
-      Headers
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
-    </li>
-  
-
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Tutorials
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
               
             
               
@@ -427,12 +726,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../md-example1/" class="md-nav__link">
+      <a href="../../tutorials/udfs/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Annotations
+    UDFs
     
   </span>
   
@@ -450,12 +749,35 @@
   
   
     <li class="md-nav__item">
-      <a href="../md-example2/" class="md-nav__link">
+      <a href="../../tutorials/figures/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    md-example2
+    Figures
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/subs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Subroutines
     
   </span>
   
@@ -529,6 +851,8 @@
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset">
                 
+    
+        
                   
 
 
@@ -695,14 +1019,19 @@ This is custom HTML with a class
 
 
                 
+    
+
               </article>
             </div>
           
+
           
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
       </main>
+    
+
       
         <footer class="md-footer">
   
@@ -730,7 +1059,7 @@ This is custom HTML with a class
     
     
       
-      <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.footnote.tooltips"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.footnote.tooltips", "navigation.tabs", "navigation.tabs.sticky", "navigation.path", "navigation.indexes", "toc.follow"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="../../assets/javascripts/bundle.c8b220af.min.js"></script>
