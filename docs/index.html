@@ -180,10 +180,25 @@
                 },
               },
             },
+            keyframes: {
+            fadeInSlideInLeft: {
+              '0%': { opacity: '0', transform: 'translateX(-40px)' },
+              '100%': { opacity: '1', transform: 'translateX(0)' },
+            },
+            fadeInSlideInRight: {
+              '0%': { opacity: '0', transform: 'translateX(+40px)' },
+              '100%': { opacity: '1', transform: 'translateX(0)' },
+            },
+            },
+            animation: {
+              fadeInSlideInLeft: 'fadeInSlideInLeft 0.8s ease-out forwards',
+              fadeInSlideInRight: 'fadeInSlideInRight 0.8s ease-out forwards',
+            },
           },
-        }
-      }
+        plugins: [],
+        },
     }
+  }
 
   </script>
   <script defer src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
@@ -302,16 +317,38 @@
 </style>
 
 
+<script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+  
+          el.classList.remove('opacity-0'); // Remove hidden state first
+  
+          // Force a reflow so that the next class addition triggers animation
+          void el.offsetWidth;
+  
+          el.classList.add('animate-fadeInSlideInLeft');
+          observer.unobserve(el); // optional: animate only once
+        }
+      });
+    }, {
+      threshold: 0.8, // Trigger when 20% visible
+    });
+  
+    const target = document.getElementById('animateDiv');
+    observer.observe(target);
+  </script>
 
 <div class="relative isolate">
     
     <!-- Background gradient -->
-    <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
+    <!-- <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
         <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"></div>
-    </div>
+    </div> -->
     
     <!-- Tagline Section with Background Image -->
-    <div class="relative w-full h-[800px]">
+    <div class="relative w-full h-[90vh] min-h-[600px] max-h-[90vh]">
         <!-- Background Image -->
         <div class="absolute inset-0 w-full">
             <img class="h-full w-full object-cover" src="https://images.unsplash.com/photo-1557683316-973673baf926?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2089&q=80" alt="Abstract background">
@@ -328,8 +365,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="." title="xlpro" class="md-header__button md-logo" aria-label="xlpro" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="assets/xlpro-logo.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -486,7 +522,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="reference/" class="md-tabs__link">
+        <a href="placeholder/" class="md-tabs__link">
           
   
   
@@ -508,7 +544,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="tutorials/" class="md-tabs__link">
+        <a href="placeholder/" class="md-tabs__link">
           
   
   
@@ -536,8 +572,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="." title="xlpro" class="md-header__button md-logo" aria-label="xlpro" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="assets/xlpro-logo.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -652,7 +687,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="reference/" class="md-tabs__link">
+        <a href="placeholder/" class="md-tabs__link">
           
   
   
@@ -674,7 +709,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="tutorials/" class="md-tabs__link">
+        <a href="placeholder/" class="md-tabs__link">
           
   
   
@@ -697,7 +732,7 @@
         
         <!-- Tagline Content -->
         <div class="relative h-full flex items-center">
-            <div class="mx-auto max-w-full w-full px-8">
+            <div class="mx-auto max-w-full w-full px-8 pb-12">
                 <div class="mx-auto max-w-6xl text-center">
                     <!-- Semi-transparent black box behind text -->
                     <!-- <div class="bg-black/10 p-8 rounded-lg backdrop-blur-sm"> -->
@@ -713,7 +748,7 @@
                 </div>
                 <div class="mx-auto max-w-6xl text-center">
                     <div>
-                        <a href="/download"
+                        <a href="https://github.com/dw-evans/xlpro-releases/releases/download/pre-v0.1.0_test_release/xlpro-v0.1.0-installer_TEST.exe"
                         class="mx-4 inline-flex items-center px-4 py-2 border border-transparent text-xs rounded-md 
                         text-white bg-md-primary-fg hover:bg-md-accent-fg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:focus:ring-offset-gray-800"
                         hx-boost="true">
@@ -738,16 +773,18 @@
                         </div>
                     </div>
                 </div>
+                <div class="m-8">
+
+                </div>
             </div>
         </div>
     </div>
 
 
-<div class="max-w-6xl mx-auto px-5">
+    <div class="p-8">
+    </div>
 
-
-        <div class="p-8">
-        </div>
+<div class="max-w-6xl mx-auto px-5 pt-8">
 
 
     <div class="max-w-6xl mx-auto px-5">
@@ -756,7 +793,7 @@
         </div>
             <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-6 gap-8 gap-x-8">
 
-                <div class="">
+                <div class="opacity-0 transform -translate-x-10 animate-fadeInSlideInLeft lg:animate-fadeInSlideInLeft">
                     <div class="flex gap-4 items-start">
                         <div class="w-9 h-9 rounded-full bg-md-default-fg-lightest flex items-center justify-center">
                             <div class="mx-auto my-auto justify-center" style="fill:white">
@@ -771,7 +808,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="">
+                <div class="opacity-0 transform -translate-x-10 animate-fadeInSlideInLeft lg:animate-fadeInSlideInRight">
                     <div class="flex gap-4 items-start">
                         <div class="w-9 h-9 rounded-full bg-md-default-fg-lightest flex items-center justify-center">
                             <div class="mx-auto my-auto justify-center" style="fill:white">
@@ -787,7 +824,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="">
+                <div class="opacity-0 transform -translate-x-10 animate-fadeInSlideInLeft lg:animate-fadeInSlideInLeft">
                     <div class="flex gap-4 items-start">
                         <div class="w-9 h-9 rounded-full bg-md-default-fg-lightest flex items-center justify-center">
                             <div class="mx-auto my-auto justify-center" style="fill:white">
@@ -802,7 +839,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="">
+                <div class="opacity-0 transform -translate-x-10 animate-fadeInSlideInLeft lg:animate-fadeInSlideInRight">
                     <div class="flex gap-4 items-start">
                         <div class="w-9 h-9 rounded-full bg-md-default-fg-lightest flex items-center justify-center">
                             <div class="mx-auto my-auto justify-center" style="fill:white">
@@ -817,7 +854,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="">
+                <div class="opacity-0 transform -translate-x-10 animate-fadeInSlideInLeft lg:animate-fadeInSlideInLeft">
                     <div class="flex gap-4 items-start">
                         <div class="w-9 h-9 rounded-full bg-md-default-fg-lightest flex items-center justify-center">
                             <div class="mx-auto my-auto justify-center" style="fill:white">
@@ -833,7 +870,7 @@
                     </div>
                 </div>
                 
-                <div class="">
+                <div class="opacity-0 transform -translate-x-10 animate-fadeInSlideInLeft lg:animate-fadeInSlideInRight">
                     <div class="flex gap-4 items-start">
                         <div class="w-9 h-9 rounded-full bg-md-default-fg-lightest flex items-center justify-center">
                             <div class="mx-auto my-auto justify-center" style="fill:white">
@@ -850,7 +887,7 @@
                 </div>
 
                 
-                <div class="">
+                <div class="opacity-0 transform -translate-x-10 animate-fadeInSlideInLeft lg:animate-fadeInSlideInLeft">
                     <div class="flex gap-4 items-start">
                         <div class="w-9 h-9 rounded-full bg-md-default-fg-lightest flex items-center justify-center">
                             <div class="mx-auto my-auto justify-center" style="fill:white">
@@ -866,7 +903,7 @@
                     </div>
                 </div>
 
-                <div class="">
+                <div class="opacity-0 transform -translate-x-10 animate-fadeInSlideInLeft lg:animate-fadeInSlideInRight">
                     <div class="flex gap-4 items-start">
                         <div class="w-9 h-9 rounded-full bg-md-default-fg-lightest flex items-center justify-center">
                             <div class="mx-auto my-auto justify-center" style="fill:white">
@@ -885,7 +922,7 @@
             </div>
     </div>
 
-    <div class="p-8">
+    <div class="p-16">
     </div>
 
 
@@ -911,10 +948,10 @@
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="32" height="32"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v12.5A1.75 1.75 0 0 1 14.25 16H1.75A1.75 1.75 0 0 1 0 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25V1.75a.25.25 0 0 0-.25-.25Zm7.47 3.97a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L10.69 8 9.22 6.53a.75.75 0 0 1 0-1.06ZM6.78 6.53 5.31 8l1.47 1.47a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215l-2-2a.75.75 0 0 1 0-1.06l2-2a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Z"></path></svg>
     </div> -->
 
-    <div class="flex flex-col gap-12">
+    <div class="flex flex-col gap-24">
   
         <!-- Row 1 -->
-        <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between lg:gap-20 gap-12">
+        <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-20 animate-fadeInSlideInLeft" id="animateDiv">
           <div class="lg:order-first w-full mx-auto text-left max-w-xl lg:w-1/2">
             <h3 class="text-lg font-bold pb-4">User Defined Functions</h3>
             <div class="text-sm space-y-4"><!-- User defined feature -->
@@ -935,7 +972,7 @@
 </div>
             
 <div class="pt-4 text-underline">
-    <a href="https://example.com" class="text-lg hover:text-md-accent-fg font-medium">
+    <a href="https://example.com" class="underline text-lg text-md-accent-fg-light hover:text-md-accent-fg font-medium">
       Learn more &rarr;
     </a>
 </div>
@@ -945,7 +982,7 @@
             <img src="https://placehold.co/600x400" alt="Image 1" class="object-cover rounded-md">
           </div>
         </div>
-        <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-20">
+        <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-20 animate-fadeInSlideInRight" id="animateDiv">
           <div class="lg:order-last w-full mx-auto  text-left max-w-xl lg:w-1/2">
             <h3 class="text-lg font-bold pb-4">Dynamic Python-Driven Assets</h3>
             <div class="text-sm space-y-4"><!-- Dynamic python driven assets -->
@@ -962,7 +999,7 @@
 </p></div>
             
 <div class="pt-4 text-underline">
-    <a href="https://example.com" class="text-lg hover:text-md-accent-fg font-medium">
+    <a href="https://example.com" class="underline text-lg text-md-accent-fg-light hover:text-md-accent-fg font-medium">
       Learn more &rarr;
     </a>
 </div>
@@ -972,7 +1009,7 @@
             <img src="https://placehold.co/600x400" alt="Image 1" class="object-cover rounded-md">
           </div>
         </div>
-        <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-20">
+        <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-20 animate-fadeInSlideInLeft" id="animateDiv">
           <div class="lg:order-first w-full mx-auto  text-left max-w-xl lg:w-1/2">
             <h3 class="text-lg font-bold pb-4">Editor & Debugging Integrations</h3>
             <div class="text-sm space-y-4"><!-- User defined feature -->
@@ -988,7 +1025,7 @@
 </div>
             
 <div class="pt-4 text-underline">
-    <a href="https://example.com" class="text-lg hover:text-md-accent-fg font-medium">
+    <a href="https://example.com" class="underline text-lg text-md-accent-fg-light hover:text-md-accent-fg font-medium">
       Learn more &rarr;
     </a>
 </div>
@@ -998,7 +1035,7 @@
             <img src="https://placehold.co/600x400" alt="Image 1" class="object-cover rounded-md">
           </div>
         </div>
-        <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-20">
+        <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-20 animate-fadeInSlideInRight" id="animateDiv">
           <div class="lg:order-last w-full mx-auto  text-left max-w-xl lg:w-1/2">
             <h3 class="text-lg font-bold pb-4">Distribution</h3>
             <div class="text-sm space-y-4"><!-- User defined feature -->
@@ -1019,7 +1056,7 @@
 </div>
             
 <div class="pt-4 text-underline">
-    <a href="https://example.com" class="text-lg hover:text-md-accent-fg font-medium">
+    <a href="https://example.com" class="underline text-lg text-md-accent-fg-light hover:text-md-accent-fg font-medium">
       Learn more &rarr;
     </a>
 </div>
@@ -1032,7 +1069,25 @@
       </div>
       </div>
 
-        <div class="my-12">
+        <div class="max-w-6xl mx-auto px-5 animate-fadeInSlideInLeft mt-64 mb-64">
+            
+            <div class="relative h-full flex flex-col items-center">
+                <div class="py-4 justify-center">
+                    <h2 class="text-3xl"><code>Ready?</code></h1>
+                    </div>
+                    <div class="text-lg space-y-4 py-8">
+                        <p>
+                            See our <a href="./getting-started" class="underline text-md-accent-fg-light hover:text-md-accent-fg">Quick Start Guide</a> to use xlpro in your next Excel or Python project.
+                        </p>
+                    </div>
+                </div>
+                
+            <hr class="w-2xl border-t-2 border-gray-300 mx-auto my-8" />
+
+
+
+
+
         </div>
     </div>
 </div>

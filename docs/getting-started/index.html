@@ -180,10 +180,25 @@
                 },
               },
             },
+            keyframes: {
+            fadeInSlideInLeft: {
+              '0%': { opacity: '0', transform: 'translateX(-40px)' },
+              '100%': { opacity: '1', transform: 'translateX(0)' },
+            },
+            fadeInSlideInRight: {
+              '0%': { opacity: '0', transform: 'translateX(+40px)' },
+              '100%': { opacity: '1', transform: 'translateX(0)' },
+            },
+            },
+            animation: {
+              fadeInSlideInLeft: 'fadeInSlideInLeft 0.8s ease-out forwards',
+              fadeInSlideInRight: 'fadeInSlideInRight 0.8s ease-out forwards',
+            },
           },
-        }
-      }
+        plugins: [],
+        },
     }
+  }
 
   </script>
   <script defer src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
@@ -226,7 +241,7 @@
         <link rel="prev" href="../download/">
       
       
-        <link rel="next" href="../reference/">
+        <link rel="next" href="../placeholder/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -305,8 +320,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href=".." title="xlpro" class="md-header__button md-logo" aria-label="xlpro" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../assets/xlpro-logo.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -463,7 +477,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../reference/" class="md-tabs__link">
+        <a href="../placeholder/" class="md-tabs__link">
           
   
   
@@ -485,7 +499,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../tutorials/" class="md-tabs__link">
+        <a href="../placeholder/" class="md-tabs__link">
           
   
   
@@ -530,8 +544,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="xlpro" class="md-nav__button md-logo" aria-label="xlpro" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../assets/xlpro-logo.svg" alt="logo">
 
     </a>
     xlpro
@@ -792,8 +805,6 @@
     
       
         
-          
-        
       
     
     
@@ -809,9 +820,8 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
         
           
-          <div class="md-nav__link md-nav__container">
-            <a href="../reference/" class="md-nav__link ">
-              
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
   
   
   <span class="md-ellipsis">
@@ -820,9 +830,8 @@
   </span>
   
 
-            </a>
-            
-          </div>
+            <span class="md-nav__icon md-icon"></span>
+          </label>
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
@@ -831,6 +840,27 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../placeholder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Placeholder
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
               
             
           </ul>
@@ -850,12 +880,6 @@
     
       
         
-          
-        
-      
-        
-      
-        
       
         
       
@@ -873,9 +897,8 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
         
           
-          <div class="md-nav__link md-nav__container">
-            <a href="../tutorials/" class="md-nav__link ">
-              
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
   
   
   <span class="md-ellipsis">
@@ -884,14 +907,8 @@
   </span>
   
 
-            </a>
-            
-              
-              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
-                <span class="md-nav__icon md-icon"></span>
-              </label>
-            
-          </div>
+            <span class="md-nav__icon md-icon"></span>
+          </label>
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
@@ -901,20 +918,18 @@
           <ul class="md-nav__list" data-md-scrollfix>
             
               
-            
-              
                 
   
   
   
   
     <li class="md-nav__item">
-      <a href="../tutorials/udfs/" class="md-nav__link">
+      <a href="../placeholder/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    UDFs
+    Placeholder
     
   </span>
   
@@ -931,13 +946,58 @@
   
   
   
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Examples
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            Examples
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../tutorials/figures/" class="md-nav__link">
+      <a href="../placeholder/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Figures
+    Placeholder
     
   </span>
   
@@ -948,24 +1008,9 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../tutorials/subs/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Subroutines
-    
-  </span>
-  
-
-      </a>
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -1164,7 +1209,7 @@
 <h2 id="installation">Installation</h2>
 <ol>
 <li>
-<p>Install the Latest Release <a href="https://github.com/dw-evans/xlpro-releases/xlpro-v0.1.0-installer.exe">xlpro-v0.1.0-installer.exe</a> or visit our <a href="/download">download page</a> for other releases</p>
+<p>Visit the <a href="/download">download page</a> to download the latest release.</p>
 </li>
 <li>
 <p>Run the installer</p>
@@ -1175,7 +1220,7 @@
 </ol>
 <p>All done! Open up a workbook and you should see the <code>xlpro</code> ribbon in Excel</p>
 <h3 id="enable-trust-access-to-the-vba-object-model">Enable Trust Access to the VBA Object Model</h3>
-<p>Xlpro currently uses dynamically allocated VBA modules to register UDFs while the background Python server is running. This requires access to the VBA object model, which can expose your machine to attacks</p>
+<p>xlpro currently uses dynamically allocated VBA modules to register UDFs while the background Python server is running. This requires access to the VBA object model, which can expose your machine to attacks</p>
 <ol>
 <li>Start Excel</li>
 <li>Open a workbook</li>
@@ -1190,13 +1235,13 @@
 
 <div class="admonition tip">
 <p class="admonition-title">Update Pending</p>
-<p>Xlpro will soon not require access the VBA object model. Once complete, this can be revoked.</p>
+<p>xlpro will soon not require access the VBA object model. Once complete, this can be revoked.</p>
 </div>
 <h2 id="quick-start">Quick-Start</h2>
 <p>First time user? Open the example workbook <code>c:/users/&lt;USERNAME&gt;/.xlpro/examples/xlpro_example1.xlsx</code></p>
 <h3 id="initialization">Initialization</h3>
 <p>Click the <code>xlpro_init</code> ribbon button. This will prompt you to configure a python installation &gt;=3.8. Select the <code>recommended</code> option to install the our recommended python version <code>python 3.13</code>.</p>
-<p>The workbook is now ready to run code. Xlpro has created a <code>/book1.xlsx.xlpro</code> folder next to <code>book1.xlsx</code> ready to be used in VSCode.</p>
+<p>The workbook is now ready to run code. xlpro has created a <code>/book1.xlsx.xlpro</code> folder next to <code>book1.xlsx</code> ready to be used in VSCode.</p>
 <h3 id="development">Development</h3>
 <p>Click the <code>start_vscode</code> ribbon button to open up the <code>./book1.xlsx.xlpro/</code> directory in VSCode (or you can do this manually).</p>
 <h4 id="user-defined-functions">User Defined Functions</h4>
@@ -1206,7 +1251,7 @@
 <h4 id="scripts">Scripts</h4>
 <p><em>Pending Development</em></p>
 <h3 id="run-the-server">Run the Server</h3>
-<p>Xlpro deploys a background python server (based on whichever was selected above) which has two functions:</p>
+<p>xlpro deploys a background python server (based on whichever was selected above) which has two functions:</p>
 <ol>
 <li>Executing your Python code</li>
 <li>Updating/registering the Excel UDFs</li>
@@ -1216,10 +1261,10 @@
 <p>Click the <code>xlpro_refresh</code> ribbon button to load/reload your functions into Excel. You can now issue a worksheet recalculate.</p>
 <div class="admonition tip">
 <p class="admonition-title">Asynchronous Execution</p>
-<p>Xlpro executes the code in a separate thread to Excel, so it has nearly no impact on Excel's responsiveness. You will likely see a placeholder string value appear before you see your function outputs because of this!</p>
+<p>xlpro executes the code in a separate thread to Excel, so it has nearly no impact on Excel's responsiveness. You will likely see a placeholder string value appear before you see your function outputs because of this!</p>
 </div>
 <h3 id="debugging">Debugging</h3>
-<p>Xlpro configures the vscode debugging task to hook onto the running Python background server. In your vscode project for the workbook, navigate to the <code>Run and Debug</code> pane and run the <code>xlpro debugpy</code> while the background server is running.</p>
+<p>xlpro configures the vscode debugging task to hook onto the running Python background server. In your vscode project for the workbook, navigate to the <code>Run and Debug</code> pane and run the <code>xlpro debugpy</code> while the background server is running.</p>
 <p>Add a breakpoint to a function being used in Excel - then click refresh and recalculate. You should have entered a breakpoint which you can use for debugging. Note this will pause the background python server.</p>
 <div class="admonition tip">
 <p class="admonition-title">Debugging</p>
@@ -1227,12 +1272,12 @@
 </div>
 <hr />
 <h2 id="faqs">FAQs</h2>
-<p>Adding a FAQ section to explain</p>
+<p>Adding a FAQ section to crudely explain the functionality.</p>
 <ol>
 <li>
 <p>Where is my Python server?</p>
 <ul>
-<li>The xlpro application creates an isolated virtual environment from <code>xlpro_init</code>. This has its own installed dependencies, and these dependencies are written to the <code>./*.xlpro/</code> directory so they can always be </li>
+<li>The xlpro application creates an isolated virtual environment from <code>xlpro_init</code>. This has its own installed dependencies, and these dependencies are written to the <code>./*.xlpro/</code> directory so the environment associated with a workbook can be reproduced.</li>
 </ul>
 </li>
 <li>
@@ -1245,14 +1290,15 @@
 <p>Why don't recalculates enter my function breakpoints</p>
 <ul>
 <li>xlpro fundamentally relies on a results cache to keep Excel's main thread free and responsive so Python can work in the background and send its results over when ready.</li>
+<li>So, if xlpro has already calculated the results of a set of arguments, it will assume the existing calculation is valid (which may not be true if your Python code depends on a random number generator).</li>
 <li>This cache is cleared when <code>xlpro_refresh</code> is called, so if you want to forcibly recalculate, consider refreshing first.</li>
-<li>The cache is tagged with a uid based on the caller address, function name and arguments as values, so if the input values change, a recalculate will be issued. This may be desireable in some cases.</li>
+<li>The cache is tagged with a uid based on the caller address, function name and arguments as values, so if the input values change, a recalculate will always be issued.</li>
 </ul>
 </li>
 <li>
 <p>How does debugging work?</p>
 <ul>
-<li>xlpro uses the VSCode <code>debugpy</code> module to open a debug server at a specific port. This port is written into  <code>./*.xlpro/.vscode/launch.json</code> each time the server is created</li>
+<li>xlpro uses the VSCode <code>debugpy</code> module to open a debug server at an available port. Once the server is running, this port is written into  <code>./*.xlpro/.vscode/launch.json</code> each time the server is created, so your debug configuration is updated as needed.</li>
 </ul>
 </li>
 <li>
@@ -1262,17 +1308,24 @@
 </ul>
 </li>
 <li>
+<p>xlpro is using a lot of space, how can I reduce it?</p>
+<ul>
+<li>xlpro will create unique environments as requested by the user, each of these will likely include fully copies of the usual libraries such as <code>matplotlib</code> and <code>numpy</code> for example. This can consume a lot of storage if left unchecked.</li>
+<li>xlpro supports linking many workbooks to one environment. Consider reusing a standard environment to prevent file duplication.</li>
+<li>Want to clear the wasted space? Just delete the envs under <code>.xlpro/envs/*</code>. The next time you initialize a workbook xlpro will use the metadata kept with the workbook to create a fresh environment that matches the previous.</li>
+</ul>
+</li>
+<li>
 <p>Can I reuse a virtual environment for multiple workbooks?</p>
 <ul>
 <li>Yes, In the <code>xlpro_init</code> dialogue when initializing a workbook, select an existing interpreter for another workbook. This will reduce the size of the xlpro installation directory.  </li>
-<li><strong>Note</strong>: This is a great way to reduce the</li>
 </ul>
 </li>
 <li>
 <p>Can I configure a virtual environment somewhere else?</p>
 <ul>
 <li>Yes, xlpro supports custom virtual environment paths. The xlpro application creates a symbolic link to this environment so it looks the same internally. This environment will need to be modified to install the <code>xlpro</code> Python module and its dependencies.</li>
-<li>symlinked environments <strong>must</strong> be virtual, and cannot be installation-level interpreters.</li>
+<li>These symlinked environments <strong>must</strong> be virtual, and cannot be installation-level interpreters. We don't want to modify your system interpreter environment!</li>
 </ul>
 </li>
 <li>
@@ -1283,9 +1336,16 @@
 </ul>
 </li>
 <li>
-<p>What if I lose my local virtual environment settings?</p>
+<p>What if I lose my local data?</p>
 <ul>
-<li>No worries! xlpro pushes the latest requirements of the virtual environment to the directory adjacent to the excel workbook. So as long as you keep the workbook file and the .xlpro folder, you can always recreate your environment.</li>
+<li>No worries! xlpro pushes the latest requirements of the virtual environment to the directory adjacent to the Excel workbook. So as long as you keep the workbook file and the .xlpro folder, you can always recreate your environment.</li>
+<li>Store your workbooks on a server </li>
+</ul>
+</li>
+<li>
+<p>Sharing workbooks</p>
+<ul>
+<li>As you might've read above, xlpro pushes the data needed to recreate the author's Python environment to the xlpro folder. Ship the workbook and xlpro folder together, and others can recreate your configuration in a few clicks. </li>
 </ul>
 </li>
 </ol>
@@ -1293,8 +1353,9 @@
 <h2 id="support">Support</h2>
 <p>Need help? Check out our:</p>
 <ul>
-<li><a href="/docs">Documentation</a></li>
-<li><a href="/examples">Examples</a></li>
+<li><a href="/tutorials">Tutorials</a></li>
+<li><a href="/tutorials/examples">Examples</a></li>
+<li><a href="/reference">Reference</a></li>
 </ul>
 <!-- - [Email]() -->
 
