@@ -1,234 +1,12 @@
 
 <!doctype html>
 <html lang="en" class="no-js">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    // Function to convert hex to RGB
-    function hexToRgb(hex) {
-        hex = hex.replace('#', '');
-        const bigint = parseInt(hex, 16);
-        const r = (bigint >> 16) & 255;
-        const g = (bigint >> 8) & 255;
-        const b = bigint & 255;
-        return [r, g, b];
-    }
 
-    // Function to convert RGB to HSL
-    function rgbToHsl(r, g, b) {
-        r /= 255;
-        g /= 255;
-        b /= 255;
-
-        const max = Math.max(r, g, b);
-        const min = Math.min(r, g, b);
-        let h, s, l = (max + min) / 2;
-
-        if (max === min) {
-            h = s = 0; // achromatic
-        } else {
-            const d = max - min;
-            s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-            switch (max) {
-                case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-                case g: h = (b - r) / d + 2; break;
-                case b: h = (r - g) / d + 4; break;
-            }
-            h /= 6;
-        }
-
-        return [h * 360, s * 100, l * 100];  // HSL values
-    }
-
-    // Function to lighten/darken HSL color
-    function adjustLightness(h, s, l, amount) {
-        l = l + amount; // Adjust lightness by the given amount
-        l = Math.min(Math.max(0, l), 100); // Clamp lightness to 0-100
-        return `hsl(${h}, ${s}%, ${l}%)`;
-    }
-
-    // Function to get lighter and darker variants of a color
-    function getColorVariants(hexColor, lightnessAdjustment = 15) {
-      // Convert hex to RGB
-      const rgb = hexToRgb(hexColor);
-      
-      // Convert RGB to HSL
-      const [h, s, l] = rgbToHsl(...rgb);
-
-      // Calculate variants by adjusting the lightness
-      const lightVariant = adjustLightness(h, s, l, lightnessAdjustment);        // Lighten by lightnessAdjustment
-      const lighterVariant = adjustLightness(h, s, l, lightnessAdjustment * 2);  // More lightened
-      const lightestVariant = adjustLightness(h, s, l, lightnessAdjustment * 3);  // Maximum lightened
-
-      const darkVariant = adjustLightness(h, s, l, -lightnessAdjustment);         // Darken by lightnessAdjustment
-      const darkerVariant = adjustLightness(h, s, l, -(lightnessAdjustment * 2)); // More darkened
-      const darkestVariant = adjustLightness(h, s, l, -(lightnessAdjustment * 3)); // Maximum darkened
-
-      return {
-          light: lightVariant,
-          lighter: lighterVariant,
-          lightest: lightestVariant,
-          dark: darkVariant,
-          darker: darkerVariant,
-          darkest: darkestVariant
-      };
-  }
-    // Function to retrieve a color from the CSS variables
-    function getCssVarColor(varName) {
-        return getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
-    }
-
-
-    window.onload = () => {
-      // Example of getting CSS variables for primary and accent colors
-      var primaryFgColor = getCssVarColor('--md-primary-fg-color');
-      var primaryBgColor = getCssVarColor('--md-primary-bg-color');
-      
-      var accentFgColor = getCssVarColor('--md-accent-fg-color');
-      var accentBgColor = getCssVarColor('--md-accent-bg-color');
-
-      var defaultFgColor = getCssVarColor('--md-default-fg-color');
-      var defaultBgColor = getCssVarColor('--md-default-bg-color');
-
-      // Get the lighter and darker variants of each color
-      var primaryFgVariants = getColorVariants(primaryFgColor);
-      var primaryBgVariants = getColorVariants(primaryBgColor);
-      var accentFgVariants = getColorVariants(accentFgColor);
-      var accentBgVariants = getColorVariants(accentBgColor);
-      var defaultFgVariants = getColorVariants(accentFgColor);
-      var defaultBgVariants = getColorVariants(accentBgColor);
-
-      console.log(primaryFgVariants)
-      console.log(primaryBgVariants)
-
-      console.log(accentFgVariants)
-      console.log(accentBgVariants)
-
-      console.log(defaultFgVariants)
-      console.log(defaultBgVariants)
-
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              
-              text: 'var(--md-default-fg-color)',
-              background: 'var(--md-default-bg-color)',
-              codebg: 'var(--md-code-bg-color)',
-              
-              md: {
-                primary: {
-                  fg: {
-                    DEFAULT: primaryFgColor,
-                    light: primaryFgVariants.light,
-                    lighter: primaryFgVariants.lighter,
-                    lightest: primaryFgVariants.lightest,
-                    dark: primaryFgVariants.dark,
-                    darker: primaryFgVariants.darker,
-                    darkest: primaryFgVariants.darkest,
-                  },
-                  bg: {
-                    DEFAULT: primaryBgColor,
-                    light: primaryBgVariants.light,
-                    lighter: primaryBgVariants.lighter,
-                    lightest: primaryBgVariants.lightest,
-                    dark: primaryBgVariants.dark,
-                    darker: primaryBgVariants.darker,
-                    darkest: primaryBgVariants.darkest,
-                  },
-                },
-
-                accent: {
-                  bg: {
-                    DEFAULT: accentBgColor,
-                    light: accentBgVariants.light,
-                    lighter: accentBgVariants.lighter,
-                    lightest: accentBgVariants.lightest,
-                    dark: accentBgVariants.dark,
-                    darker: accentBgVariants.darker,
-                    darkest: accentBgVariants.darkest,
-                  },
-                  fg: {
-                    DEFAULT: accentFgColor,
-                    light: accentFgVariants.light,
-                    lighter: accentFgVariants.lighter,
-                    lightest: accentFgVariants.lightest,
-                    dark: accentFgVariants.dark,
-                    darker: accentFgVariants.darker,
-                    darkest: accentFgVariants.darkest,
-                  }
-                },
-
-                default: {
-                  bg: {
-                    DEFAULT: defaultBgColor,
-                    light: 'var(--md-default-bg-color--light)',
-                    lighter: 'var(--md-default-bg-color--lighter)',
-                    lightest: 'var(--md-default-bg-color--lightest)',
-                    dark: defaultBgVariants.dark,
-                    darker: defaultBgVariants.darker,
-                    darkest: defaultBgVariants.darkest,
-                  },
-                  fg: {
-                    DEFAULT: defaultFgColor,
-                    light: 'var(--md-default-fg-color--light)',
-                    lighter: 'var(--md-default-fg-color--lighter)',
-                    lightest: 'var(--md-default-fg-color--lightest)',
-                    dark: defaultFgVariants.dark,
-                    darker: defaultFgVariants.darker,
-                    darkest: defaultFgVariants.darkest,
-                  }
-                },
-              },
-            },
-            keyframes: {
-            fadeInSlideInLeft: {
-              '0%': { opacity: '0', transform: 'translateX(-40px)' },
-              '100%': { opacity: '1', transform: 'translateX(0)' },
-            },
-            fadeInSlideInRight: {
-              '0%': { opacity: '0', transform: 'translateX(+40px)' },
-              '100%': { opacity: '1', transform: 'translateX(0)' },
-            },
-            },
-            animation: {
-              fadeInSlideInLeft: 'fadeInSlideInLeft 0.8s ease-out forwards',
-              fadeInSlideInRight: 'fadeInSlideInRight 0.8s ease-out forwards',
-            },
-          },
-        plugins: [],
-        },
-    }
-  }
-
-  </script>
-  <script defer src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
-  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <!-- <script defer src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script> -->
+  <!-- <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script> -->
   
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/8.5.0/font/octicons.css">
-
-  <!-- <div class="text-md-accent-fg-darkest">
-    <code>TEST TEXT</code><span> TEST TEXT</span>
-  </div>
-
-  <div class="text-md-accent-fg-darker">
-    <code>TEST TEXT</code><span> TEST TEXT</span>
-  </div>
-  <div class="text-md-accent-fg-dark">
-    <code>TEST TEXT</code><span> TEST TEXT</span>
-  </div>
-  <div class="text-md-accent-fg">
-    <code>TEST TEXT</code><span> TEST TEXT</span>
-  </div>
-  <div class="text-md-accent-fg-light">
-    <code>TEST TEXT</code><span> TEST TEXT</span>
-  </div>
-  <div class="text-md-accent-fg-lighter">
-    <code>TEST TEXT</code><span> TEST TEXT</span>
-  </div>
-  <div class="text-md-accent-fg-lightest">
-    <code>TEST TEXT</code><span> TEST TEXT</span>
-   -->
+  <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> -->
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/8.5.0/font/octicons.css"> -->
   
   <head>
     
@@ -270,6 +48,8 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
     
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -931,6 +711,8 @@
     
     
       <script src="../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+        <script src="../../assets/javascripts/extra.js"></script>
       
     
   </body>
