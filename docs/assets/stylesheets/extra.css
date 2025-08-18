@@ -14,7 +14,7 @@
 } */
 
 /* When screen is > 500px: Show logo and nav tabs, hide hamburger */
-@media screen and (min-width: 481px) {
+@media screen and (min-width: 600px) {
   .md-header__button.md-logo {
     display: inline-block;
   }
