@@ -1,5 +1,5 @@
 /* Override Material for MkDocs default breakpoint for collapsing nav */
-@media screen and (max-width: 600px) {
+/* @media screen and (max-width: 480px) {
   .md-header__button.md-logo {
     display: none;
   }
@@ -11,10 +11,10 @@
   .md-header__button[for="__drawer"] {
     display: inline-block;
   }
-}
+} */
 
 /* When screen is > 500px: Show logo and nav tabs, hide hamburger */
-@media screen and (min-width: 601px) {
+@media screen and (min-width: 481px) {
   .md-header__button.md-logo {
     display: inline-block;
   }

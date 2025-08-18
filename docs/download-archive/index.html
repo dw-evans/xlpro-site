@@ -16,6 +16,10 @@
       
       
       
+        <link rel="prev" href="../download/">
+      
+      
+        <link rel="next" href="../getting-started/">
       
       
       <link rel="icon" href="../assets/favicon-32.png">
@@ -23,7 +27,7 @@
     
     
       
-        <title>Development - xlpro</title>
+        <title>Archive - xlpro</title>
       
     
     
@@ -77,7 +81,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#development" class="md-skip">
+        <a href="#archive" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +117,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Development
+              Archive
             
           </span>
         </div>
@@ -209,10 +213,12 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
+      <li class="md-tabs__item md-tabs__item--active">
         <a href="../download/" class="md-tabs__link">
           
   
@@ -358,8 +364,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -371,17 +379,20 @@
     
     
       
+        
+        
+      
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
             
   
   
@@ -394,7 +405,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Download
@@ -428,10 +439,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../download-archive/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Archive
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -442,6 +475,35 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#archived-releases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Archived Releases
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -781,60 +843,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#xlpro_module" class="md-nav__link">
+  <a href="#archived-releases" class="md-nav__link">
     <span class="md-ellipsis">
-      xlpro_module
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#xlpro_cli" class="md-nav__link">
-    <span class="md-ellipsis">
-      xlpro_cli
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#xlpro_addin" class="md-nav__link">
-    <span class="md-ellipsis">
-      xlpro_addin
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="xlpro_addin">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#build-process" class="md-nav__link">
-    <span class="md-ellipsis">
-      Build Process
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#xlpro_installer" class="md-nav__link">
-    <span class="md-ellipsis">
-      xlpro_installer
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#deployment" class="md-nav__link">
-    <span class="md-ellipsis">
-      Deployment
+      Archived Releases
     </span>
   </a>
   
@@ -858,84 +869,45 @@
 
 
 
-<h1 id="development">Development</h1>
-<h2 id="xlpro_module">xlpro_module</h2>
-<ul>
-<li>Create a no admin rights COM server, unique per project</li>
-<li>Receive calculation requests</li>
-<li>Perform calculations asynchronously to be non-blocking in Excel</li>
-<li>Issue updates</li>
-<li>Handle multi-threaded COM, </li>
-<li>manage errors with STA apartment access, </li>
-<li>Excel being blocked, </li>
-<li>object references breaking</li>
-<li>Object thread marshalling</li>
-<li>Manage race conditions from</li>
-<li>Manage results cache</li>
-<li>Key Aspects</li>
-<li>Structure:<ul>
-<li>xlpro COM server</li>
-<li>xlpro Workspace (for single interpreter, multiple project support)</li>
-<li>Calculation manager</li>
-<li>Results manager</li>
-<li>Client manager</li>
-</ul>
-</li>
-<li>Type casting</li>
-<li>Function registration</li>
-<li></li>
-<li>Handle python functions</li>
-<li>Handle Python object passing via Excel</li>
-<li>Handle iterable return values (e.g. list of python objects)</li>
-<li>Handle figure returns</li>
-<li>Handle table creation</li>
-<li>Handle 'unsupported' VBA functionality - e.g. cell formatting from UDF </li>
-<li>Type coercion, None handling</li>
-<li>Handle Excel quirks</li>
-<li>Ghost function calls</li>
-<li>Dead object references</li>
-</ul>
-<h2 id="xlpro_cli">xlpro_cli</h2>
-<ul>
-<li>Initialize a project</li>
-<li>Store links between projects and venvs</li>
-</ul>
-<!-- - XXX TODO need to be able to handle the python versino changing by someone else... -->
-<ul>
-<li>Install requirements, variant for development/testing workflow</li>
-<li>Start the calculation server for a project</li>
-<li>Kill any existing processes via lockfile and pid checks</li>
-<li>Spawn server child process</li>
-<li>Signal via pipe a registration trigger to child process</li>
-<li>Update VSCode workspace launch.json for unique debugging port for project</li>
-<li>Update VSCode workspace settings.json for venv path mappings for LSP support and terminal venv auto-init</li>
-<li>Handle venv creation</li>
-<li>new download venvs</li>
-<li>new local venvs </li>
-<li>symlinked venvs</li>
-<li>Handle Python version downloads using uv</li>
-<li>Walk user through configurations, verify inputs</li>
-</ul>
-<h2 id="xlpro_addin">xlpro_addin</h2>
-<ul>
-<li>Read the xlpro configuration file</li>
-<li>VBA pre-processing for calculation efficiency</li>
-<li>Optional argument engine</li>
-<li>Buttons to interact</li>
-</ul>
-<h3 id="build-process">Build Process</h3>
-<p>customUI14.xml
-vba</p>
-<h2 id="xlpro_installer">xlpro_installer</h2>
-<ul>
-<li>Compile the xlpro Python module wheel</li>
-<li>Compile the xlpro add-in</li>
-<li>Compile the xlpro command line interface</li>
-<li>Build the install structure with examples and Python wheels</li>
-<li>Modify user PATH</li>
-<li>Handle uninstallation</li>
-</ul>
-<h2 id="deployment">Deployment</h2>
+<h1 id="archive">Archive</h1>
+<h2 id="archived-releases">Archived Releases</h2>
+<p>Please refer to the following list of maintained former active releases.</p>
+<table>
+<thead>
+<tr>
+<th>Installer</th>
+<th>Release Date</th>
+<th>Release Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/dw-evans/xlpro-releases/releases/download/v0.0.4/xlpro-v0.0.4-installer.exe">xlpro-v0.0.4-installer.exe</a></td>
+<td>2025-07-06</td>
+<td>Stable release test build</td>
+</tr>
+<tr>
+<td><a href="https://github.com/dw-evans/xlpro-releases/releases/download/v0.0.3/xlpro-v0.0.3-installer.exe">xlpro-v0.0.3-installer.exe</a></td>
+<td>2025-06-23</td>
+<td>Development build only</td>
+</tr>
+<tr>
+<td><a href="https://github.com/dw-evans/xlpro-releases/releases/download/v0.0.2/xlpro-v0.0.2-installer.exe">xlpro-v0.0.2-installer.exe</a></td>
+<td>2025-06-08</td>
+<td>Development build only - Efficiency Improvements</td>
+</tr>
+<tr>
+<td><a href="https://github.com/dw-evans/xlpro-releases/releases/download/pre-v0.1.0_TEST3/xlpro-v0.0.1-installer.exe">xlpro-v0.0.1-installer.exe</a></td>
+<td>2025-06-04</td>
+<td>Development build only</td>
+</tr>
+<tr>
+<td><a href="https://github.com/dw-evans/xlpro-releases/releases/download/pre-v0.1.0_TEST2/xlpro-v0.0.0-installer.exe">xlpro-v0.0.0-installer.exe</a></td>
+<td>2025-06-03</td>
+<td>Development build only</td>
+</tr>
+</tbody>
+</table>
 
 
 

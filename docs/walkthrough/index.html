@@ -19,10 +19,10 @@
         <link rel="prev" href="../getting-started/">
       
       
-        <link rel="next" href="../gallery-index/">
+        <link rel="next" href="../docs/">
       
       
-      <link rel="icon" href="../assets/images/favicon.png">
+      <link rel="icon" href="../assets/favicon-32.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.12">
     
     
@@ -48,8 +48,8 @@
         
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"JetBrains Mono"}</style>
       
     
     
@@ -214,17 +214,20 @@
   
   
   
-    <li class="md-tabs__item">
-      <a href="../download/" class="md-tabs__link">
-        
+    
+    
+      <li class="md-tabs__item">
+        <a href="../download/" class="md-tabs__link">
+          
   
   
     
   
   Download
 
-      </a>
-    </li>
+        </a>
+      </li>
+    
   
 
       
@@ -260,13 +263,13 @@
     
     
       <li class="md-tabs__item">
-        <a href="../gallery-index/" class="md-tabs__link">
+        <a href="../docs/" class="md-tabs__link">
           
   
   
     
   
-  Gallery
+  Docs
 
         </a>
       </li>
@@ -363,9 +366,29 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../download/" class="md-nav__link">
+    
+    
+      
         
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
   
   
   <span class="md-ellipsis">
@@ -374,7 +397,65 @@
   </span>
   
 
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Download
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../download/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Downloads
+    
+  </span>
+  
+
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../download-archive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Archive
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -684,6 +765,8 @@
       
         
       
+        
+      
     
     
     
@@ -703,7 +786,7 @@
   
   
   <span class="md-ellipsis">
-    Gallery
+    Docs
     
   </span>
   
@@ -714,7 +797,7 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
-            Gallery
+            Docs
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -725,12 +808,35 @@
   
   
     <li class="md-nav__item">
-      <a href="../gallery-index/" class="md-nav__link">
+      <a href="../docs/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Gallery
+    Documentation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../behaviour/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Behaviour
     
   </span>
   
@@ -1040,17 +1146,6 @@
 
 
 <h1 id="walkthrough">Walkthrough</h1>
-<!-- ## Contents
-
-1. First Custom Function
-2. Debugging
-3. Installing a New Package
-4. xlpro built-ins Example
-5. Showcases:
-      1. Data Fetching and Plotting Showcase
-      2. Dynamic Plotting Showcase
-
-For all the examples, you can navigate to the xlpro examples directory via the xlpro Excel ribbon button. -->
 <h2 id="introduction">Introduction</h2>
 <p>In this example, we will walk through the core functions of xlpro. This will provide an understanding of the core concepts so you can build a more complex example.</p>
 <ol>
@@ -1061,33 +1156,31 @@ For all the examples, you can navigate to the xlpro examples directory via the x
 <li>Optional Arguments</li>
 <li>Array Type Casting</li>
 <li>Creating Figures</li>
-<li>Showing Figures in Excel</li>
 <li>Debugging</li>
 <li>Installing Dependencies</li>
 </ol>
-<p>You can follow this tutorial on your own, or refer to the worked example reference file found at <code>examples/xlpro-ex01.xlsx</code> in the xlpro installation directory.</p>
+<p>You can follow this tutorial on your own, or refer to the worked example reference file found at <code>xlpro_examples/Walkthough.xlsx</code> in the xlpro installation directory.</p>
 <p>You may want to take the files elsewhere on your machine to avoid modifying the originals. Copy these files to another location before starting.
-- <code>examples/xlpro-ex01-basics.xlsx</code>
-- <code>examples/xlpro-ex01-basics.xlsx.xlpro/</code> (skip copying this if you want to try from scratch)</p>
+- <code>xlpro_examples/Walkthrough.xlsx</code>
+- <code>xlpro_examples/Walkthrough.xlsx.xlpro/</code> (skip copying this if you want to try from scratch)</p>
 <h2 id="output">Output</h2>
 <p>This tutorial shows how to build this workbook, which showcases some of the core behaviour and capabilities of xlpro, including a dynamic figure which updates in real-time with the spreadsheet. </p>
-<p>The figure pulls x, y, data generated in bog-standard Excel and is generated with a function defined in Python.</p>
+<p>The figure pulls x, y, data in plain Excel and is generates a simple <code>matplotlib</code> figure.</p>
 <p><img alt="" src="../assets/gen/asset17.png" /></p>
 <h2 id="initialize-and-download-python">Initialize and Download Python</h2>
-<p>Create a new workbook, initialize it in xlpro using the button, and install the latest stable Python 3.13 release using the uv download option. Wait for the workbook to initialize.</p>
+<p>Create a new workbook, initialize it in xlpro using the button, use the <code>(recommended) Create New Python 3.13 Environment</code> option. This will download a new interpreter and will prompt you to install the dependencies for pre-existing projects.</p>
 <p><img alt="" src="../assets/gen/asset4a.png" /></p>
-<p><img alt="" src="../assets/gen/asset5.png" /></p>
+<p><img alt="" src="../assets/gen/asset18.png" /></p>
 <h2 id="writing-and-using-a-function">Writing and Using a Function</h2>
-<p>Open the VSCode workspace using the <code>Edit</code> ribbon button.</p>
+<p>Open the VSCode workspace using the <code>Develop</code> ribbon button.</p>
 <p>Add the following code to <code>functions.py</code> in the VSCode workspace. When we run the server, we will find a matching function becomes registered in Excel.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">xlpro</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">custom_adder</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
 </span></code></pre></div>
-<p>Start the server in Excel. This will create a startup process which will close in a few seconds, and a child process which shows the running Python calculation server for the workbook. </p>
-<p>The child process will show useful information for debugging purposes, so you may need to check this occasionally if you see errors.</p>
-<p>After a few seconds, the server will have prepared the VBA UDFs. In Excel, enter <code>=custom_adder(1, 2)</code>, you should see the result <code>3</code> in the cell. Use the <code>Sync</code> button to try again if the function does not exist (e.g. <code>#NAME</code> error). </p>
+<p>Start the server in Excel by pressing the <code>Start</code> button. This will create a startup process which will close in a few seconds, and a child process which shows the running Python calculation server for the workbook. </p>
+<p>After a few seconds, the server will have prepared the VBA UDFs. In Excel, enter <code>=custom_adder(1, 2)</code>, you should see the result <code>3</code> appear in the cell. Use the <code>Sync</code> button to try again if the function does not exist (e.g. <code>#NAME</code> error indicating the function does not exist.). </p>
 <p>Now point the function to reference some cells, e.g. <code>=custom_adder(A1, A2)</code>. Ensure both inputs are <em>explicitly</em> given as values, i.e. not blank cells, we'll touch on this later.</p>
 <h2 id="returning-python-objects">Returning Python Objects</h2>
 <p>Create a new function <code>custom_adder_matrix</code>. This function will take an 2D Excel argument a <code>a</code>, convert to a <code>np.ndarray</code> matrix, add <code>b</code> and return the result.</p>
@@ -1101,7 +1194,7 @@ For all the examples, you can navigate to the xlpro examples directory via the x
 <h2 id="showing-a-pyobj">Showing a PyObj</h2>
 <p>For now, we can use the <code>xlpro.show()</code> method and call it from Excel to visualise the result. Add this code to <code>functions.py</code> to register the <code>show()</code> function in Excel.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Register </span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">xlpro</span><span class="o">.</span><span class="n">register</span><span class="p">()(</span><span class="n">xlpro</span><span class="o">.</span><span class="n">show</span><span class="p">)</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">xlpro</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">xlpro</span><span class="o">.</span><span class="n">show</span><span class="p">)</span>
 </span></code></pre></div>
 <p>In Excel, use the formula <code>=show(X)</code> on the <code>PyObj...</code> cell. This will expand the result so you can pull the data into Excel for inspection, visualisation, or to pass to Excel functions or plots. Watch out to not create a <code>#SPILL</code> error.</p>
 <p>Something similar can be done with figure or image objects.</p>
@@ -1213,8 +1306,8 @@ ndarray[np.int32]
 <p>Note the name of the figure in Excel will match the argument. </p>
 <p><img alt="" src="../assets/gen/asset12.png" /></p>
 <h3 id="dynamic-figure-updates-and-seed">Dynamic Figure Updates and <code>seed</code></h3>
-<p>It is possible to sequentially add lines to a figure object by applying a function which performs a change to the figure. The issue this raises is the timing of a <code>show_image()</code> call in Excel. If we show the figure before all of the updates have taken effect, the image will be out of date wiht the object,</p>
-<p>To manage this, the <code>seed</code> argument is intended to be any value which is driven by all input cells (e.g. each cell which applies a function). By driving this value with all precedents, the <code>show_image()</code> call will always reflect the state of the object.</p>
+<p>It is possible to sequentially add lines to a figure object by applying a function which performs a change to the figure, e.g. <code>add_line_to_axes(xdata, ydata, lineformat)</code>. The issue this raises is the timing of a <code>show_image()</code> call in Excel. We will end up with a race condition where the figure may not reflect the latest changes.</p>
+<p>To manage this, the <code>seed</code> argument is intended to be any value which drives the render step. If this value is driven by all of the cells which manipulate the figure, then the <code>show_image()</code> function will only execute when the precedents have completed successfully.</p>
 <!-- ???- tip "Excel Image UIDs"
     Excel keeps a register of shapes by connecting each to a unique string name. Make sure the string you provide to `show_image` via `excel_image_id` is correct. Reusing an existing name will overwrite the original!
 
@@ -1274,46 +1367,28 @@ ndarray[np.int32]
 <p><img alt="" src="../assets/gen/asset14.png" /></p>
 </div>
 <div class="admonition warning">
-<p class="admonition-title">A Note On Breakpoints</p>
-<p>When you hit a breakpoint the entire calculation server pauses. This can cause the Excel UI to become unresponsive. This is simply caused by the <em>entire</em> Python process pausing, so Excel will hang on the next function call. resuming the Python server will resume Excel also.</p>
+<p class="admonition-title">A Note On Breakpoints, and Excel Hangs</p>
+<p>When you hit a breakpoint the entire calculation server pauses. This can cause the Excel UI to become unresponsive as it is unable to get a response from the calculation server. </p>
+<p>This is simply caused by the <em>entire</em> Python process pausing when a breakpoint is hit, so resuming the server (or closing it) will let Excel resume.</p>
 </div>
 <h2 id="installing-a-package">Installing a Package</h2>
 <p>You may want to install packages to develop a more complex project beyond <code>matplotlib</code>, <code>pandas</code> and <code>numpy</code>. Lets install the <code>yfinance</code> package and build a graph to visualise some financial data.</p>
-<p>Reminder: xlpro relies on the exe path written to <code>.vscode/settings.json</code>. If you are on a newer version of VSCode, ensure you run the <code>Python: Clear Workspace Interpreter Setting</code> from the command pallette (<code>ctrl + shift + P</code>) on all xlpro projects.</p>
+<p>This is as simple as opening a terminal in VSCode, and running <code>pip install ...</code></p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Ensure you run the <code>Python: Clear Workspace Interpreter Setting</code> from the command pallette (<code>ctrl + shift + P</code>) so VSCode knows which interpreter to activate.</p>
+<p>Why? - xlpro relies on the Python exe path written to <code>.vscode/settings.json</code>. </p>
 <p><img alt="" src="../assets/gen/asset16.png" /></p>
-<p>Now create a new terminal using <code>ctrl + shift + '</code> or <code>Terminal &gt; New</code>.</p>
-<p>VSCode should pull the correct setting and activate the environment based on the setting in <code>.vscode/settings.json</code></p>
-<p><img alt="" src="../assets/gen/asset15.png" /></p>
-<!-- ```shell
-xlpro-ex01-basics.xlsx.xlpro> & "C:/Users/user.name/.xlpro/envs/938914f1-ee8e-4fb0-9530-9806de7fe215_3.13.2/.venv/scripts/Activate.ps1"
-(.venv) xlpro-ex01-basics.xlsx.xlpro> 
-``` -->
-
-<p>You can now use <code>pip install</code> to install a new package to the xlpro environment. If you install a new requirement, you should also <code>Push</code> the project requirements from the xlpro Excel ribbon to reflect the changes in the environment on the server next to the workbook.</p>
-<h2 id="data-visualisation-using-external-api-data">Data Visualisation Using External API Data</h2>
-<div class="admonition tip">
-<p class="admonition-title">Work In Progress... Coming soon.</p>
 </div>
-<!-- 
-<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>pip install yfinance
-</span></code></pre></div>
-```powershell
-(.venv) xlpro-ex01-basics.xlsx.xlpro> pip install yfinance
-Collecting yfinance
-  Downloading yfinance-0.2.64-py2.py3-none-any.whl.metadata (5.8 kB)
-  ...
-Successfully installed ... yfinance-0.2.64
-(.venv) xlpro-ex01-basics.xlsx.xlpro> 
-``` -->
-
-<!-- ```python
-def create_plot_of_ticker_price(
-    ticker:str,
-    num_days:int
-):
-    ...
-    return fig
-``` -->
+<p>Now create a new terminal using <code>ctrl + shift + '</code> or <code>Terminal &gt; New</code>.</p>
+<p>VSCode should pull the correct setting and automatically activate the correct environment. Now <code>pip</code> will install to the right Python interpreter.</p>
+<p><img alt="" src="../assets/gen/asset15.png" /></p>
+<div class="admonition info">
+<p class="admonition-title">Reminder</p>
+<p>If you install a new requirement, you should remember to also <code>Push Requirements</code> from the xlpro Excel ribbon to keep the server files up to date. </p>
+</div>
+<h2 id="data-visualisation-using-external-api-data">Data Visualisation Using External API Data</h2>
+<p>Refer to the <code>xlpro_examples/xlpro-Showcase.xlsx.xlpro</code> project for an example of <code>yfinance</code>.</p>
 
 
 
@@ -1341,16 +1416,42 @@ def create_plot_of_ticker_price(
     
 
       
-        <footer class="md-footer">
+        <div style="height: 2rem;"></div>
+<footer class="md-footer">
+
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-copyright">
   
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 Daniel Evans
+    </div>
   
-    Made with
+  
+    <!-- Made with
     <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
       Material for MkDocs
+    </a> -->
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://www.linkedin.com/in/dw-evans/" target="_blank" rel="noopener" title="Daniel Evans on Linkedin" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5m282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://github.com/dw-evans/xlpro-releases" target="_blank" rel="noopener" title="xlpro-releases GitHub Page" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
     </a>
   
 </div>
@@ -1358,6 +1459,8 @@ def create_plot_of_ticker_price(
     </div>
   </div>
 </footer>
+
+
       
     </div>
     <div class="md-dialog" data-md-component="dialog">

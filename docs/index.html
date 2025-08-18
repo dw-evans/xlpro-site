@@ -20,7 +20,7 @@
         <link rel="next" href="download/">
       
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="assets/favicon-32.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.12">
     
     
@@ -46,8 +46,8 @@
         
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"JetBrains Mono"}</style>
       
     
     
@@ -210,6 +210,9 @@ window.onload = () => {
             'opacity-100'
         ],
         extend: {
+        fontFamily: {
+            mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+        },
         colors: {
             
             text: 'var(--md-default-fg-color)',
@@ -376,6 +379,41 @@ window.addEventListener('load', () => {
 
 
 </script>
+<script>
+// Observe for videos tagged with data-play-when-visible and start them when visible
+  document.addEventListener("DOMContentLoaded", function () {
+    const observer = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach(entry => {
+        const video = entry.target;
+          if (entry.isIntersecting) {
+            video.play().catch(err => {
+                // optional: handle autoplay restrictions
+                console.log("Video play failed:", err);
+            });
+            // observer.unobserve(video);    // only trigger once
+          }
+        //   else {
+        //       video.pause().catch(err => {
+        //           // optional: handle autoplay restrictions
+        //           console.log("Video pause failed:", err);
+        //       });
+        //       // observer.unobserve(video);    // only trigger once
+        //     }
+        });
+      },
+      {
+        threshold: 0.8
+      }
+    );
+
+    // Observe all target elements
+    document.querySelectorAll("[data-play-when-visible]").forEach(el => {
+      observer.observe(el);
+    });
+});
+
+</script>
 
 <style>
 /* .invisible-before-animate {
@@ -388,12 +426,26 @@ window.addEventListener('load', () => {
   visibility: hidden;
   opacity: 0;
 }
+
+code {
+    background-color: rgba(255, 255, 255, 0.05); /* white with 90% opacity */
+    border-radius: 4px; /* rounded corners */
+    padding: 1px 4px;       /* optional padding */
+    display: inline-block;  /* so it wraps text nicely */
+}
+
+.mono {
+    font-style: "Jetbains Mono";
+}
+
 </style>
+
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
 
 <script src="https://cdn.tailwindcss.com"></script>
 
 
-<div class="relative isolate preload-hidden">
+<div class="md-content relative isolate preload-hidden">
 <!-- <div class="relative isolate"> -->
     
     <!-- Background gradient -->
@@ -407,7 +459,7 @@ window.addEventListener('load', () => {
         <div class="absolute inset-0 w-full">
             <img class="h-full w-full object-cover" src="https://images.unsplash.com/photo-1557683316-973673baf926?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2089&q=80" alt="Abstract background">
             <!-- Semi-transparent overlay -->
-            <div class="absolute inset-0 bg-black/50"></div>
+            <div class="absolute inset-0 bg-black/30"></div>
         </div>
         <div>
             
@@ -535,17 +587,20 @@ window.addEventListener('load', () => {
   
   
   
-    <li class="md-tabs__item">
-      <a href="download/" class="md-tabs__link">
-        
+    
+    
+      <li class="md-tabs__item">
+        <a href="download/" class="md-tabs__link">
+          
   
   
     
   
   Download
 
-      </a>
-    </li>
+        </a>
+      </li>
+    
   
 
       
@@ -579,13 +634,13 @@ window.addEventListener('load', () => {
     
     
       <li class="md-tabs__item">
-        <a href="gallery-index/" class="md-tabs__link">
+        <a href="docs/" class="md-tabs__link">
           
   
   
     
   
-  Gallery
+  Docs
 
         </a>
       </li>
@@ -703,17 +758,20 @@ window.addEventListener('load', () => {
   
   
   
-    <li class="md-tabs__item">
-      <a href="download/" class="md-tabs__link">
-        
+    
+    
+      <li class="md-tabs__item">
+        <a href="download/" class="md-tabs__link">
+          
   
   
     
   
   Download
 
-      </a>
-    </li>
+        </a>
+      </li>
+    
   
 
       
@@ -747,13 +805,13 @@ window.addEventListener('load', () => {
     
     
       <li class="md-tabs__item">
-        <a href="gallery-index/" class="md-tabs__link">
+        <a href="docs/" class="md-tabs__link">
           
   
   
     
   
-  Gallery
+  Docs
 
         </a>
       </li>
@@ -796,12 +854,12 @@ window.addEventListener('load', () => {
                 <div class="mx-auto max-w-6xl text-center opacity-0" data-animate="fadeIn">
                     <!-- Semi-transparent black box behind text -->
                     <!-- <div class="bg-black/10 p-8 rounded-lg backdrop-blur-sm"> -->
-                        <h1 class="text-2xl tracking-tight text-white sm:text-4xl mb-0">Secure, customizable Python for Excel</h1>
+                        <h1 class="text-2xl tracking-tight text-white sm:text-4xl mb-0">Accelerate your Spreadsheets with Python</h1>
                     <!-- </div> -->
                     <div class="py-12 opacity-0" data-animate="fadeInSlideInUp1Delay1">
-                        <div class="mx-auto max-w-md">
+                        <div class="mx-auto max-w-lg">
                             <div class="text-base">
-                                xlpro is a lightweight Python wrapper for Excel. Distribute Python functionality alongside your spreadsheets.
+                                Introducing xlpro: the local Python Add-In for Excel. Secure, simple, and user friendly.
                             </div>
                         </div>
                     </div>
@@ -810,7 +868,7 @@ window.addEventListener('load', () => {
                 <div class="opacity-0" data-animate="fadeInSlideInUp1Delay2">
                     <div class="mx-auto max-w-6xl text-center">
                         <div>
-                            <a href="https://github.com/dw-evans/xlpro-releases/releases/download/v0.0.5/xlpro-v0.0.5-installer.exe"
+                            <a href="/download"
                             class="mx-4 inline-flex items-center px-4 py-2 border border-transparent text-base rounded-md 
                             text-white bg-md-primary-fg hover:bg-md-accent-fg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:focus:ring-offset-gray-800"
                             hx-boost="true">
@@ -821,16 +879,15 @@ window.addEventListener('load', () => {
                                     </path>
                                 </svg>
                             </div>
-                            <code>Download</code>
+                            <span class="font-mono">Download</span>
                         </a>
                     </div>
-                    
                 </div>
                 <div class="mx-auto max-w-6xl text-center py-4">
                     <div>
                         <div class="mx-auto max-w-md">
                             <span class="text-xxs">
-                                <code>Available for Office 365 and Excel 2021+ on Windows 10/11</code>
+                                <span class="font-mono">Available for Office 365 and Excel 2021+ on Windows 10/11</span>
                             </span>
                         </div>
                     </div>
@@ -852,10 +909,10 @@ window.addEventListener('load', () => {
 
     <div class="max-w-6xl mx-auto px-5">
         <div class="py-8">
-            <h2 class="text-2xl"><code>Highlights</code></h1>
+            <h1 class="text-2xl"><span class="font-mono">Highlights</span></h1>
         </div>
-            <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-6 gap-8 gap-x-8">
-                <div class="opacity-0 transform -translate-x-10" data-animate="fadeInSlideInLeft" >
+            <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-1 gap-4 gap-x-8">
+                <div class="opacity-0 transform -translate-x-10 hover:bg-white/5 rounded-md p-4" data-animate="fadeInSlideInLeft" >
                     <div class="flex gap-4 items-start">
                         <div class="w-9 h-9 rounded-full bg-md-default-fg-lightest flex items-center justify-center">
                             <div class="mx-auto my-auto justify-center" style="fill:white">
@@ -865,12 +922,12 @@ window.addEventListener('load', () => {
                         <div class="flex flex-col flex-1">
                             <h3 class="text-xs font-semibold text-white">Functions</h3>
                             <p class="text-xs text-white/70 mt-1">
-                                Define new Excel functions in Python to call from Excel. Leverage Excel's recaluclation logic to keep your functions up to date.
+                                Define new Excel functions in Python to call from Excel. Analyse data, create charts or do anything you like.
                             </p>
                         </div>
                     </div>
                 </div>
-                <div class="opacity-0 transform -translate-x-10" data-animate="fadeInSlideInRight" >
+                <div class="opacity-0 transform -translate-x-10 hover:bg-white/5 rounded-md p-4" data-animate="fadeInSlideInRight" >
                 <!-- <div class="opacity-0 transform -translate-x-10 lg:animate-fadeInSlideInRight animate-fadeInSlideInLeft"> -->
                     <div class="flex gap-4 items-start">
                         <div class="w-9 h-9 rounded-full bg-md-default-fg-lightest flex items-center justify-center">
@@ -880,14 +937,14 @@ window.addEventListener('load', () => {
                             </div>
                         </div>
                         <div class="flex flex-col flex-1">
-                            <h3 class="text-xs font-semibold text-white">Subroutines</h3>
+                            <h3 class="text-xs font-semibold text-white">Automation</h3>
                             <p class="text-xs text-white/70 mt-1">
-                                Define subroutines in Python and configure and call them from Excel.
+                                Use Excel as the UI for your automations. Define macros in Python and call them from Excel. Automate anything, from Excel to Word, or even your operating system.
                             </p>
                         </div>
                     </div>
                 </div>
-                <div class="opacity-0 transform -translate-x-10" data-animate="fadeInSlideInLeft" >
+                <div class="opacity-0 transform -translate-x-10 hover:bg-white/5 rounded-md p-4" data-animate="fadeInSlideInLeft" >
                     <div class="flex gap-4 items-start">
                         <div class="w-9 h-9 rounded-full bg-md-default-fg-lightest flex items-center justify-center">
                             <div class="mx-auto my-auto justify-center" style="fill:white">
@@ -897,12 +954,12 @@ window.addEventListener('load', () => {
                         <div class="flex flex-col flex-1">
                             <h3 class="text-xs font-semibold text-white">Editor Integration</h3>
                             <p class="text-xs text-white/70 mt-1">
-                                xlpro's file structure suits modern tooling. Develop your code in an IDE with standard linting and debugging support. Version your software with Git. 
+                                xlpro's file structure suits modern tooling. Develop your code in a modern IDE and version your software with Git. 
                             </p>
                         </div>
                     </div>
                 </div>
-                <div class="opacity-0 transform -translate-x-10" data-animate="fadeInSlideInRight" >
+                <div class="opacity-0 transform -translate-x-10 hover:bg-white/5 rounded-md p-4" data-animate="fadeInSlideInRight" >
                     <div class="flex gap-4 items-start">
                         <div class="w-9 h-9 rounded-full bg-md-default-fg-lightest flex items-center justify-center">
                             <div class="mx-auto my-auto justify-center" style="fill:white">
@@ -912,12 +969,12 @@ window.addEventListener('load', () => {
                         <div class="flex flex-col flex-1">
                             <h3 class="text-xs font-semibold text-white">Code Sharing & Tracking</h3>
                             <p class="text-xs text-white/70 mt-1">
-                                Distribute your scripts alongside your workbooks. Let other users replicate your Python environment for guaranteed compatibility.
+                                Simple distribution allows users to replicate your Python environment for guaranteed compatibility.
                             </p>
                         </div>
                     </div>
                 </div>
-                <div class="opacity-0 transform -translate-x-10" data-animate="fadeInSlideInLeft" >
+                <div class="opacity-0 transform -translate-x-10 hover:bg-white/5 rounded-md p-4" data-animate="fadeInSlideInLeft" >
                     <div class="flex gap-4 items-start">
                         <div class="w-9 h-9 rounded-full bg-md-default-fg-lightest flex items-center justify-center">
                             <div class="mx-auto my-auto justify-center" style="fill:white">
@@ -927,13 +984,13 @@ window.addEventListener('load', () => {
                         <div class="flex flex-col flex-1">
                             <h3 class="text-xs font-semibold text-white">Lightweight</h3>
                             <p class="text-xs text-white/70 mt-1">
-                                A simple wrapper for Python in Excel. Bring your own Python or use xlpro to install on the fly.
+                                A simple Python wrapper. Bring your own Python or install on the fly. No admin rights necessary.
                             </p>
                         </div>
                     </div>
                 </div>
                 
-                <div class="opacity-0 transform -translate-x-10" data-animate="fadeInSlideInRight" >
+                <div class="opacity-0 transform -translate-x-10 hover:bg-white/5 rounded-md p-4" data-animate="fadeInSlideInRight" >
                     <div class="flex gap-4 items-start">
                         <div class="w-9 h-9 rounded-full bg-md-default-fg-lightest flex items-center justify-center">
                             <div class="mx-auto my-auto justify-center" style="fill:white">
@@ -943,14 +1000,14 @@ window.addEventListener('load', () => {
                         <div class="flex flex-col flex-1">
                             <h3 class="text-xs font-semibold text-white">Customization</h3>
                             <p class="text-xs text-white/70 mt-1">
-                                Configure the standard Python version, libraries and startfiles for every new project created within your business.
+                                Install any libraries and standardize every project created within your business.
                             </p>
                         </div>
                     </div>
                 </div>
 
                 
-                <div class="opacity-0 transform -translate-x-10" data-animate="fadeInSlideInLeft" >
+                <div class="opacity-0 transform -translate-x-10 hover:bg-white/5 rounded-md p-4" data-animate="fadeInSlideInLeft" >
                     <div class="flex gap-4 items-start">
                         <div class="w-9 h-9 rounded-full bg-md-default-fg-lightest flex items-center justify-center">
                             <div class="mx-auto my-auto justify-center" style="fill:white">
@@ -960,13 +1017,13 @@ window.addEventListener('load', () => {
                         <div class="flex flex-col flex-1">
                             <h3 class="text-xs font-semibold text-white">One-Click Installation</h3>
                             <p class="text-xs text-white/70 mt-1">
-                                Install xlpro with one click and have it ready to use in Excel immediately.
+                                Beginner friendly. Install xlpro with one click and have it ready to use immediately.
                             </p>
                         </div>
                     </div>
                 </div>
 
-                <div class="opacity-0 transform -translate-x-10" data-animate="fadeInSlideInRight" >
+                <div class="opacity-0 transform -translate-x-10 hover:bg-white/5 rounded-md p-4" data-animate="fadeInSlideInRight" >
                     <div class="flex gap-4 items-start">
                         <div class="w-9 h-9 rounded-full bg-md-default-fg-lightest flex items-center justify-center">
                             <div class="mx-auto my-auto justify-center" style="fill:white">
@@ -976,7 +1033,7 @@ window.addEventListener('load', () => {
                         <div class="flex flex-col flex-1">
                             <h3 class="text-xs font-semibold text-white">Privacy</h3>
                             <p class="text-xs text-white/70 mt-1">
-                                No cloud, no telemetry. Your code runs on your Python interpreter on your machine. No data leaves your machine at any point.
+                                No cloud, no telemetry. Your code runs on your Python interpreter on your machine.
                             </p>
                         </div>
                     </div>
@@ -990,35 +1047,21 @@ window.addEventListener('load', () => {
 
 
     <div class="py-8">
-        <h2 class="text-2xl"><code>Features</code></h1>
+        <h2 class="text-2xl"><span class="font-mono">Features</span></h1>
     </div>
 
     <div class="max-w-6xl mx-auto px-5">
 
     
 
-    <!-- <div style="fill:white" class="space-y-2">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="32" height="32"><path d="M3.499.75a.75.75 0 0 1 1.5 0v.996C5.9 2.903 6.793 3.65 7.662 4.376l.24.202c-.036-.694.055-1.422.426-2.163C9.1.873 10.794-.045 12.622.26 14.408.558 16 1.94 16 4.25c0 1.278-.954 2.575-2.44 2.734l.146.508.065.22c.203.701.412 1.455.476 2.226.142 1.707-.4 3.03-1.487 3.898C11.714 14.671 10.27 15 8.75 15h-6a.75.75 0 0 1 0-1.5h1.376a4.484 4.484 0 0 1-.563-1.191 3.835 3.835 0 0 1-.05-2.063 4.647 4.647 0 0 1-2.025-.293.75.75 0 0 1 .525-1.406c1.357.507 2.376-.006 2.698-.318l.009-.01a.747.747 0 0 1 1.06 0 .748.748 0 0 1-.012 1.074c-.912.92-.992 1.835-.768 2.586.221.74.745 1.337 1.196 1.621H8.75c1.343 0 2.398-.296 3.074-.836.635-.507 1.036-1.31.928-2.602-.05-.603-.216-1.224-.422-1.93l-.064-.221c-.12-.407-.246-.84-.353-1.29a2.425 2.425 0 0 1-.507-.441 3.075 3.075 0 0 1-.633-1.248.75.75 0 0 1 1.455-.364c.046.185.144.436.31.627.146.168.353.305.712.305.738 0 1.25-.615 1.25-1.25 0-1.47-.95-2.315-2.123-2.51-1.172-.196-2.227.387-2.706 1.345-.46.92-.27 1.774.019 3.062l.042.19a.884.884 0 0 1 .01.05c.348.443.666.949.94 1.553a.75.75 0 1 1-1.365.62c-.553-1.217-1.32-1.94-2.3-2.768L6.7 5.527c-.814-.68-1.75-1.462-2.692-2.619a3.737 3.737 0 0 0-1.023.88c-.406.495-.663 1.036-.722 1.508.116.122.306.21.591.239.388.038.797-.06 1.032-.19a.75.75 0 0 1 .728 1.31c-.515.287-1.23.439-1.906.373-.682-.067-1.473-.38-1.879-1.193L.75 5.677V5.5c0-.984.48-1.94 1.077-2.664.46-.559 1.05-1.055 1.673-1.353V.75Z"></path></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="32" height="32"><path d="M2 2.75A2.75 2.75 0 0 1 4.75 0c.983 0 1.873.42 2.57 1.232.268.318.497.668.68 1.042.183-.375.411-.725.68-1.044C9.376.42 10.266 0 11.25 0a2.75 2.75 0 0 1 2.45 4h.55c.966 0 1.75.784 1.75 1.75v2c0 .698-.409 1.301-1 1.582v4.918A1.75 1.75 0 0 1 13.25 16H2.75A1.75 1.75 0 0 1 1 14.25V9.332C.409 9.05 0 8.448 0 7.75v-2C0 4.784.784 4 1.75 4h.55c-.192-.375-.3-.8-.3-1.25ZM7.25 9.5H2.5v4.75c0 .138.112.25.25.25h4.5Zm1.5 0v5h4.5a.25.25 0 0 0 .25-.25V9.5Zm0-4V8h5.5a.25.25 0 0 0 .25-.25v-2a.25.25 0 0 0-.25-.25Zm-7 0a.25.25 0 0 0-.25.25v2c0 .138.112.25.25.25h5.5V5.5h-5.5Zm3-4a1.25 1.25 0 0 0 0 2.5h2.309c-.233-.818-.542-1.401-.878-1.793-.43-.502-.915-.707-1.431-.707ZM8.941 4h2.309a1.25 1.25 0 0 0 0-2.5c-.516 0-1 .205-1.43.707-.337.392-.646.975-.879 1.793Z"></path></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="32" height="32"><path d="M9.533.753V.752c.217 2.385 1.463 3.626 2.653 4.81C13.37 6.74 14.498 7.863 14.498 10c0 3.5-3 6-6.5 6S1.5 13.512 1.5 10c0-1.298.536-2.56 1.425-3.286.376-.308.862 0 1.035.454C4.46 8.487 5.581 8.419 6 8c.282-.282.341-.811-.003-1.5C4.34 3.187 7.035.75 8.77.146c.39-.137.726.194.763.607ZM7.998 14.5c2.832 0 5-1.98 5-4.5 0-1.463-.68-2.19-1.879-3.383l-.036-.037c-1.013-1.008-2.3-2.29-2.834-4.434-.322.256-.63.579-.864.953-.432.696-.621 1.58-.046 2.73.473.947.67 2.284-.278 3.232-.61.61-1.545.84-2.403.633a2.79 2.79 0 0 1-1.436-.874A3.198 3.198 0 0 0 3 10c0 2.53 2.164 4.5 4.998 4.5Z"></path></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="32" height="32"><path d="M9.533.753V.752c.217 2.385 1.463 3.626 2.653 4.81C13.37 6.74 14.498 7.863 14.498 10c0 3.5-3 6-6.5 6S1.5 13.512 1.5 10c0-1.298.536-2.56 1.425-3.286.376-.308.862 0 1.035.454C4.46 8.487 5.581 8.419 6 8c.282-.282.341-.811-.003-1.5C4.34 3.187 7.035.75 8.77.146c.39-.137.726.194.763.607ZM7.998 14.5c2.832 0 5-1.98 5-4.5 0-1.463-.68-2.19-1.879-3.383l-.036-.037c-1.013-1.008-2.3-2.29-2.834-4.434-.322.256-.63.579-.864.953-.432.696-.621 1.58-.046 2.73.473.947.67 2.284-.278 3.232-.61.61-1.545.84-2.403.633a2.79 2.79 0 0 1-1.436-.874A3.198 3.198 0 0 0 3 10c0 2.53 2.164 4.5 4.998 4.5Z"></path></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="32" height="32"><path d="M9.533.753V.752c.217 2.385 1.463 3.626 2.653 4.81C13.37 6.74 14.498 7.863 14.498 10c0 3.5-3 6-6.5 6S1.5 13.512 1.5 10c0-1.298.536-2.56 1.425-3.286.376-.308.862 0 1.035.454C4.46 8.487 5.581 8.419 6 8c.282-.282.341-.811-.003-1.5C4.34 3.187 7.035.75 8.77.146c.39-.137.726.194.763.607ZM7.998 14.5c2.832 0 5-1.98 5-4.5 0-1.463-.68-2.19-1.879-3.383l-.036-.037c-1.013-1.008-2.3-2.29-2.834-4.434-.322.256-.63.579-.864.953-.432.696-.621 1.58-.046 2.73.473.947.67 2.284-.278 3.232-.61.61-1.545.84-2.403.633a2.79 2.79 0 0 1-1.436-.874A3.198 3.198 0 0 0 3 10c0 2.53 2.164 4.5 4.998 4.5Z"></path></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="32" height="32"><path d="M8 0a8.2 8.2 0 0 1 .701.031C9.444.095 9.99.645 10.16 1.29l.288 1.107c.018.066.079.158.212.224.231.114.454.243.668.386.123.082.233.09.299.071l1.103-.303c.644-.176 1.392.021 1.82.63.27.385.506.792.704 1.218.315.675.111 1.422-.364 1.891l-.814.806c-.049.048-.098.147-.088.294.016.257.016.515 0 .772-.01.147.038.246.088.294l.814.806c.475.469.679 1.216.364 1.891a7.977 7.977 0 0 1-.704 1.217c-.428.61-1.176.807-1.82.63l-1.102-.302c-.067-.019-.177-.011-.3.071a5.909 5.909 0 0 1-.668.386c-.133.066-.194.158-.211.224l-.29 1.106c-.168.646-.715 1.196-1.458 1.26a8.006 8.006 0 0 1-1.402 0c-.743-.064-1.289-.614-1.458-1.26l-.289-1.106c-.018-.066-.079-.158-.212-.224a5.738 5.738 0 0 1-.668-.386c-.123-.082-.233-.09-.299-.071l-1.103.303c-.644.176-1.392-.021-1.82-.63a8.12 8.12 0 0 1-.704-1.218c-.315-.675-.111-1.422.363-1.891l.815-.806c.05-.048.098-.147.088-.294a6.214 6.214 0 0 1 0-.772c.01-.147-.038-.246-.088-.294l-.815-.806C.635 6.045.431 5.298.746 4.623a7.92 7.92 0 0 1 .704-1.217c.428-.61 1.176-.807 1.82-.63l1.102.302c.067.019.177.011.3-.071.214-.143.437-.272.668-.386.133-.066.194-.158.211-.224l.29-1.106C6.009.645 6.556.095 7.299.03 7.53.01 7.764 0 8 0Zm-.571 1.525c-.036.003-.108.036-.137.146l-.289 1.105c-.147.561-.549.967-.998 1.189-.173.086-.34.183-.5.29-.417.278-.97.423-1.529.27l-1.103-.303c-.109-.03-.175.016-.195.045-.22.312-.412.644-.573.99-.014.031-.021.11.059.19l.815.806c.411.406.562.957.53 1.456a4.709 4.709 0 0 0 0 .582c.032.499-.119 1.05-.53 1.456l-.815.806c-.081.08-.073.159-.059.19.162.346.353.677.573.989.02.03.085.076.195.046l1.102-.303c.56-.153 1.113-.008 1.53.27.161.107.328.204.501.29.447.222.85.629.997 1.189l.289 1.105c.029.109.101.143.137.146a6.6 6.6 0 0 0 1.142 0c.036-.003.108-.036.137-.146l.289-1.105c.147-.561.549-.967.998-1.189.173-.086.34-.183.5-.29.417-.278.97-.423 1.529-.27l1.103.303c.109.029.175-.016.195-.045.22-.313.411-.644.573-.99.014-.031.021-.11-.059-.19l-.815-.806c-.411-.406-.562-.957-.53-1.456a4.709 4.709 0 0 0 0-.582c-.032-.499.119-1.05.53-1.456l.815-.806c.081-.08.073-.159.059-.19a6.464 6.464 0 0 0-.573-.989c-.02-.03-.085-.076-.195-.046l-1.102.303c-.56.153-1.113.008-1.53-.27a4.44 4.44 0 0 0-.501-.29c-.447-.222-.85-.629-.997-1.189l-.289-1.105c-.029-.11-.101-.143-.137-.146a6.6 6.6 0 0 0-1.142 0ZM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM9.5 8a1.5 1.5 0 1 0-3.001.001A1.5 1.5 0 0 0 9.5 8Z"></path></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="32" height="32"><path d="M15 3a3 3 0 0 1-5.175 2.066l-3.92 2.179a2.994 2.994 0 0 1 0 1.51l3.92 2.179a3 3 0 1 1-.73 1.31l-3.92-2.178a3 3 0 1 1 0-4.133l3.92-2.178A3 3 0 1 1 15 3Zm-1.5 10a1.5 1.5 0 1 0-3.001.001A1.5 1.5 0 0 0 13.5 13Zm-9-5a1.5 1.5 0 1 0-3.001.001A1.5 1.5 0 0 0 4.5 8Zm9-5a1.5 1.5 0 1 0-3.001.001A1.5 1.5 0 0 0 13.5 3Z"></path></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="32" height="32"><path d="M5 5.782V2.5h-.25a.75.75 0 0 1 0-1.5h6.5a.75.75 0 0 1 0 1.5H11v3.282l3.666 5.76C15.619 13.04 14.543 15 12.767 15H3.233c-1.776 0-2.852-1.96-1.899-3.458Zm-2.4 6.565a.75.75 0 0 0 .633 1.153h9.534a.75.75 0 0 0 .633-1.153L12.225 10.5h-8.45ZM9.5 2.5h-3V6c0 .143-.04.283-.117.403L4.73 9h6.54L9.617 6.403A.746.746 0 0 1 9.5 6Z"></path></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="32" height="32"><path d="M10.5 0a5.499 5.499 0 1 1-1.288 10.848l-.932.932a.749.749 0 0 1-.53.22H7v.75a.749.749 0 0 1-.22.53l-.5.5a.749.749 0 0 1-.53.22H5v.75a.749.749 0 0 1-.22.53l-.5.5a.749.749 0 0 1-.53.22h-2A1.75 1.75 0 0 1 0 14.25v-2c0-.199.079-.389.22-.53l4.932-4.932A5.5 5.5 0 0 1 10.5 0Zm-4 5.5c-.001.431.069.86.205 1.269a.75.75 0 0 1-.181.768L1.5 12.56v1.69c0 .138.112.25.25.25h1.69l.06-.06v-1.19a.75.75 0 0 1 .75-.75h1.19l.06-.06v-1.19a.75.75 0 0 1 .75-.75h1.19l1.023-1.025a.75.75 0 0 1 .768-.18A4 4 0 1 0 6.5 5.5ZM11 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="32" height="32"><path d="M4 4a4 4 0 0 1 8 0v2h.25c.966 0 1.75.784 1.75 1.75v5.5A1.75 1.75 0 0 1 12.25 15h-8.5A1.75 1.75 0 0 1 2 13.25v-5.5C2 6.784 2.784 6 3.75 6H4Zm8.25 3.5h-8.5a.25.25 0 0 0-.25.25v5.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-5.5a.25.25 0 0 0-.25-.25ZM10.5 6V4a2.5 2.5 0 1 0-5 0v2Z"></path></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="32" height="32"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v12.5A1.75 1.75 0 0 1 14.25 16H1.75A1.75 1.75 0 0 1 0 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25V1.75a.25.25 0 0 0-.25-.25Zm7.47 3.97a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L10.69 8 9.22 6.53a.75.75 0 0 1 0-1.06ZM6.78 6.53 5.31 8l1.47 1.47a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215l-2-2a.75.75 0 0 1 0-1.06l2-2a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Z"></path></svg>
-    </div> -->
-
-    <div class="flex flex-col gap-24">
+    <div class="flex flex-col gap-36">
   
         <!-- Row 1 -->
-        <div class="opacity-0 flex flex-col lg:flex-row lg:items-start lg:justify-between gap-20" data-animate="fadeInSlideInLeft">
-          <div class="lg:order-first w-full mx-auto text-left max-w-xl lg:w-1/2">
-            <h3 class="text-lg font-bold pb-4">User Defined Functions</h3>
+        <div class="opacity-0 flex flex-col xl:flex-row xl:items-start xl:justify-between gap-20" data-animate="fadeInSlideInLeft">
+          <div class="xl:order-first w-full mx-auto text-left max-w-xl xl:w-1/2">
+            <h3 class="text-lg font-bold pb-4">Python From The Formula Bar</h3>
             <div class="text-sm space-y-4"><!-- User defined feature -->
-<p>
+<!-- <p>
     Define Excel equations in Python using your favourite libraries and call them from Excel asynchronously.
     Link your arguments to ranges as you normally would, and let Excel's recalculation cycle issue recalcuation
     requests as the function arguments update.
@@ -1030,26 +1073,51 @@ window.addEventListener('load', () => {
 <p>
     Need to inspect the contents of a Python object? - Just use the <code>show()</code> function to expand
     the array contents dynamically into Excel.
+</p> -->
+<p>
+    Define new UDFs in Excel in Python using your favourite libraries and call them from the formula bar.
+    Return simple values, dates, 2D arrays, or arbitrary Python objects.
+</p>
+<p>
+    Mix and match Excel and Python data to use Excel as your UI for your functions.
+</p>
+<p>
+    Have a <code>list</code>, <code>numpy.ndarray</code> or <code>pd.DataFrame</code>? Call <code>show()</code> to convert the object to an Excel array.
 </p>
 
 </div>
             
-<div class="pt-4 text-underline">
+<!-- <div class="pt-4 text-underline">
     <a href="https://example.com" class="underline text-lg text-md-accent-fg-light hover:text-md-accent-fg font-medium">
       Learn more &rarr;
     </a>
-</div>
+</div> -->
 
           </div>
           <div class="lg:order-last flex-shrink-0 mx-auto">
-            <img src="https://placehold.co/600x400" alt="Image 1" class="object-cover rounded-md">
-          </div>
+            <div class="relative inline-block">
+                <video id="video-01" data-play-when-visible loop muted playsinline class="rounded-md max-w-xl">
+                    <source src="assets/video/xlpro-clips-4k-04_01.mp4" type="video/mp4">
+                    <source src="assets/video/xlpro-clips-4k-04_01_1080.webm" type="video/webm">
+                </video>
+                <div onclick="document.getElementById('video-01').currentTime=0" class="absolute top-2 left-2">
+                    <div class="bg-black opacity-30 rounded-full hover:opacity-50">
+                        <div class="p-[6px]">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+                                <path fill="currentColor" d="M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z">
+                                </path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="opacity-0 flex flex-col lg:flex-row lg:items-start lg:justify-between gap-20" data-animate="fadeInSlideInRight">
-          <div class="lg:order-last w-full mx-auto  text-left max-w-xl lg:w-1/2">
-            <h3 class="text-lg font-bold pb-4">Dynamic Python-Driven Assets</h3>
+    </div>
+    <div class="opacity-0 flex flex-col xl:flex-row xl:items-start xl:justify-between gap-20" data-animate="fadeInSlideInRight">
+        <div class="xl:order-last w-full mx-auto  text-left max-w-xl xl:w-1/2">
+            <h3 class="text-lg font-bold pb-4">Dynamic Charts</h3>
             <div class="text-sm space-y-4"><!-- Dynamic python driven assets -->
-<p>
+<!-- <p>
     Need bespoke plotting functionality? - xlpro's <code>show_image()</code> function will 
     to export your image-like objects <code>matplotlib.figure.Figure</code> dynamically into Excel.
 </p>
@@ -1059,76 +1127,92 @@ window.addEventListener('load', () => {
 </p>
     You aren't dealing with a conventional figure? - That's fine, <code>show_image()</code> supports simple
     paths, so you can always bring your data into Excel.
+</p> -->
+<p>
+    Generate figures and charts in Python and display them in Excel, completely dynamically. 
+</p>
+<p>
+    Loading your raw data from a csv? API request? Or just want to use a Python visualisation library?
+    Just write a function that returns a figure, and you're good to go.
+</p>
+<p>
+    Inputs changed? No problem - your functions are tied to the Excel recalculation cycle, 
+    so your figure is always kept up-to-date.
 </p></div>
             
-<div class="pt-4 text-underline">
+<!-- <div class="pt-4 text-underline">
     <a href="https://example.com" class="underline text-lg text-md-accent-fg-light hover:text-md-accent-fg font-medium">
       Learn more &rarr;
     </a>
-</div>
+</div> -->
 
-          </div>
-          <div class="lg:order-first flex-shrink-0 mx-auto">
-            <img src="https://placehold.co/600x400" alt="Image 1" class="object-cover rounded-md">
-          </div>
         </div>
-        <div class="opacity-0 flex flex-col lg:flex-row lg:items-start lg:justify-between gap-20" data-animate="fadeInSlideInLeft">
-          <div class="lg:order-first w-full mx-auto  text-left max-w-xl lg:w-1/2">
-            <h3 class="text-lg font-bold pb-4">Editor & Debugging Integrations</h3>
-            <div class="text-sm space-y-4"><!-- User defined feature -->
+        <div, class="xl:order-first flex-shrink-0 mx-auto">
+            <div class="relative inline-block">
+                <video id="video-02" data-play-when-visible loop muted playsinline class="rounded-md max-w-xl">
+                    <source src="assets/video/xlpro-clips-4k-04_02.mp4" type="video/mp4">
+                    <source src="assets/video/xlpro-clips-4k-04_02_1080.webm" type="video/webm">
+                </video>
+                <div onclick="document.getElementById('video-02').currentTime=0" class="absolute top-2 left-2">
+                    <div class="bg-black opacity-30 rounded-full hover:opacity-50">
+                        <div class="p-[6px]">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+                                <path fill="currentColor" d="M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z">
+                                </path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="opacity-0 flex flex-col xl:flex-row xl:items-start xl:justify-between gap-20" data-animate="fadeInSlideInLeft">
+          <div class="xl:order-first w-full mx-auto  text-left max-w-xl xl:w-1/2">
+            <h3 class="text-lg font-bold pb-4">Python Macros</h3>
+            <div class="text-sm space-y-4"><!-- Subroutines -->
 <p>
-    Native support for VSCode workspaces. Simply run the pre-configured and dynamic debug configuration
-    to debug your functions while the Python server is running.
+    Need to automate Microsoft Office, filesystem operations, generate documents, or just tired of writing VBA? 
+    Simply write a Python function to do what you need, and access it directly from the Excel macro window.
 </p>
 <p>
-    Need support for other debugging formats? Reach out!
+    Thanks to its rich open-source ecosystem, Python can automate many of your day-to-day actions or even 
+    interact directly with applications such as Excel, Word and Powerpoint.
 </p>
+<p>
+    Maybe you can finally automate all those tedious tasks in a modern, simple, and robust language...
+</p>
+
+
 
 
 </div>
             
-<div class="pt-4 text-underline">
+<!-- <div class="pt-4 text-underline">
     <a href="https://example.com" class="underline text-lg text-md-accent-fg-light hover:text-md-accent-fg font-medium">
       Learn more &rarr;
     </a>
-</div>
+</div> -->
 
           </div>
-          <div class="lg:order-last flex-shrink-0 mx-auto">
-            <img src="https://placehold.co/600x400" alt="Image 1" class="object-cover rounded-md">
-          </div>
-        </div>
-        <div class="opacity-0 flex flex-col lg:flex-row lg:items-start lg:justify-between gap-20" data-animate="fadeInSlideInRight">
-          <div class="lg:order-last w-full mx-auto  text-left max-w-xl lg:w-1/2">
-            <h3 class="text-lg font-bold pb-4">Distribution</h3>
-            <div class="text-sm space-y-4"><!-- User defined feature -->
-<p>
-    Your code and configurations are kept in a folder adjacent to your target workbook. <code>requirements.txt</code> 
-    and <code>.python-version</code> are updated dynamically as the workbook is saved.
-</p>
-<p>
-    Need to install a new package? Leverage the VSCode default interpreter path setting and open a terminal and just run 
-    <code>pip install</code>. xlpro will manage the rest.
-</p>
-<p>
-    Sharing a document with a colleague? All they need to do is re-initialze the workbook on their machine and
-    xlpro will ensure their environment matches yours before any code runs.
-</p>
-
-
-</div>
-            
-<div class="pt-4 text-underline">
-    <a href="https://example.com" class="underline text-lg text-md-accent-fg-light hover:text-md-accent-fg font-medium">
-      Learn more &rarr;
-    </a>
-</div>
-
-          </div>
-          <div class="lg:order-first flex-shrink-0 mx-auto">
-            <img src="https://placehold.co/600x400" alt="Image 1" class="object-cover rounded-md">
+          <div class="xl:order-last flex-shrink-0 mx-auto">
+            <div class="relative inline-block">
+                <video id="video-03" data-play-when-visible loop muted playsinline class="rounded-md max-w-xl">
+                    <source src="assets/video/xlpro-clips-4k-04_03.mp4" type="video/mp4">
+                    <source src="assets/video/xlpro-clips-4k-04_03_1080.webm" type="video/webm">
+                </video>
+                <div onclick="document.getElementById('video-03').currentTime=0" class="absolute top-2 left-2">
+                    <div class="bg-black opacity-30 rounded-full hover:opacity-50">
+                        <div class="p-[6px]">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+                                <path fill="currentColor" d="M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z">
+                                </path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
           </div>
         </div>
+
       </div>
       </div>
 
@@ -1136,12 +1220,12 @@ window.addEventListener('load', () => {
             <div class="relative h-full flex flex-col items-center">
                 <div class="py-4 justify-center">
                     <div class="opacity-0 text-center mx-auto" data-animate="fadeInSlideInUpReady1">
-                        <h2 class="text-3xl"><code>Ready?</code></h1>
+                        <h2 class="text-3xl"><span class="font-mono">Ready?</span></h1>
                     </div>
                     <div class="opacity-0" data-animate="fadeInSlideInUpReady2">
                         <div class="text-lg space-y-4 py-8">
                             <p>
-                                See our <a href="./getting-started" class="underline text-md-accent-fg-light hover:text-md-accent-fg">Quick Start Guide</a> to use xlpro in your next Excel or Python project.
+                                See our <a href="./getting-started" class="underline text-md-accent-fg-light hover:text-md-accent-fg">Quick Start Guide</a> to use xlpro in your next project.
                             </p>
                         </div>
                     </div>
@@ -1152,19 +1236,57 @@ window.addEventListener('load', () => {
         </div>
     </div>
 </div>
+
+<!-- <script>
+    const video3 = document.getElementById("video-03")
+    const video3Button = document.getElementById("video-03-btn")
+
+    video3Button.addEventListener("click", () => {
+        video3.currentTime = 0;
+        video3.play();
+    })
+
+
+</script> -->
     
 
       
-        <footer class="md-footer">
+        <div style="height: 2rem;"></div>
+<footer class="md-footer">
+
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-copyright">
   
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 Daniel Evans
+    </div>
   
-    Made with
+  
+    <!-- Made with
     <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
       Material for MkDocs
+    </a> -->
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://www.linkedin.com/in/dw-evans/" target="_blank" rel="noopener" title="Daniel Evans on Linkedin" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5m282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://github.com/dw-evans/xlpro-releases" target="_blank" rel="noopener" title="xlpro-releases GitHub Page" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
     </a>
   
 </div>
@@ -1172,6 +1294,8 @@ window.addEventListener('load', () => {
     </div>
   </div>
 </footer>
+
+
       
     </div>
     <div class="md-dialog" data-md-component="dialog">
