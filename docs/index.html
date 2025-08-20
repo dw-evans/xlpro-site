@@ -80,13 +80,405 @@
     
       <div class="md-container" data-md-component="container">
         <!-- home page override -->
-        <main class="md-main" data-md-component="main" style="height: 0px">
-          <div class="md-main__inner md-grid">
-              
-                <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
-                  <div class="md-sidebar__scrollwrap">
-                    <div class="md-sidebar__inner">
-                      
+        
+<style>
+    .md-header {
+        --md-primary-fg-color: #00000000; /* Override for just this header */
+    }
+
+    .md-header--shadow {
+        box-shadow: none;
+        transition: none;
+    }
+</style>
+
+<script>
+// Function to convert hex to RGB
+function hexToRgb(hex) {
+    hex = hex.replace('#', '');
+    const bigint = parseInt(hex, 16);
+    const r = (bigint >> 16) & 255;
+    const g = (bigint >> 8) & 255;
+    const b = bigint & 255;
+    return [r, g, b];
+}
+
+// Function to convert RGB to HSL
+function rgbToHsl(r, g, b) {
+    r /= 255;
+    g /= 255;
+    b /= 255;
+
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    let h, s, l = (max + min) / 2;
+
+    if (max === min) {
+        h = s = 0; // achromatic
+    } else {
+        const d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch (max) {
+            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+            case g: h = (b - r) / d + 2; break;
+            case b: h = (r - g) / d + 4; break;
+        }
+        h /= 6;
+    }
+
+    return [h * 360, s * 100, l * 100];  // HSL values
+}
+
+// Function to lighten/darken HSL color
+function adjustLightness(h, s, l, amount) {
+    l = l + amount; // Adjust lightness by the given amount
+    l = Math.min(Math.max(0, l), 100); // Clamp lightness to 0-100
+    return `hsl(${h}, ${s}%, ${l}%)`;
+}
+
+// Function to get lighter and darker variants of a color
+function getColorVariants(hexColor, lightnessAdjustment = 15) {
+    // Convert hex to RGB
+    const rgb = hexToRgb(hexColor);
+    
+    // Convert RGB to HSL
+    const [h, s, l] = rgbToHsl(...rgb);
+
+    // Calculate variants by adjusting the lightness
+    const lightVariant = adjustLightness(h, s, l, lightnessAdjustment);        // Lighten by lightnessAdjustment
+    const lighterVariant = adjustLightness(h, s, l, lightnessAdjustment * 2);  // More lightened
+    const lightestVariant = adjustLightness(h, s, l, lightnessAdjustment * 3);  // Maximum lightened
+
+    const darkVariant = adjustLightness(h, s, l, -lightnessAdjustment);         // Darken by lightnessAdjustment
+    const darkerVariant = adjustLightness(h, s, l, -(lightnessAdjustment * 2)); // More darkened
+    const darkestVariant = adjustLightness(h, s, l, -(lightnessAdjustment * 3)); // Maximum darkened
+
+    return {
+        light: lightVariant,
+        lighter: lighterVariant,
+        lightest: lightestVariant,
+        dark: darkVariant,
+        darker: darkerVariant,
+        darkest: darkestVariant
+    };
+}
+// Function to retrieve a color from the CSS variables
+function getCssVarColor(varName) {
+    return getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+}
+
+window.onload = () => {
+    // Example of getting CSS variables for primary and accent colors
+    var primaryFgColor = getCssVarColor('--md-primary-fg-color');
+    var primaryBgColor = getCssVarColor('--md-primary-bg-color');
+    
+    var accentFgColor = getCssVarColor('--md-accent-fg-color');
+    var accentBgColor = getCssVarColor('--md-accent-bg-color');
+
+    var defaultFgColor = getCssVarColor('--md-default-fg-color');
+    var defaultBgColor = getCssVarColor('--md-default-bg-color');
+
+    // Get the lighter and darker variants of each color
+    var primaryFgVariants = getColorVariants(primaryFgColor);
+    var primaryBgVariants = getColorVariants(primaryBgColor);
+    var accentFgVariants = getColorVariants(accentFgColor);
+    var accentBgVariants = getColorVariants(accentBgColor);
+    var defaultFgVariants = getColorVariants(accentFgColor);
+    var defaultBgVariants = getColorVariants(accentBgColor);
+
+    console.log(primaryFgVariants)
+    console.log(primaryBgVariants)
+
+    console.log(accentFgVariants)
+    console.log(accentBgVariants)
+
+    console.log(defaultFgVariants)
+    console.log(defaultBgVariants)
+
+    tailwind.config = {
+    content: [],
+    // important: '.tw', // 🔥 Scope all Tailwind utilities to `.tw`
+    theme: {
+        safelist: [
+            'animate-fadeInSlideInLeft',
+            'animate-fadeInSlideInRight',
+            'opacity-0',
+            'opacity-100'
+        ],
+        extend: {
+        fontFamily: {
+            mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+        },
+        colors: {
+            
+            text: 'var(--md-default-fg-color)',
+            background: 'var(--md-default-bg-color)',
+            codebg: 'var(--md-code-bg-color)',
+            
+            md: {
+            primary: {
+                fg: {
+                DEFAULT: primaryFgColor,
+                light: primaryFgVariants.light,
+                lighter: primaryFgVariants.lighter,
+                lightest: primaryFgVariants.lightest,
+                dark: primaryFgVariants.dark,
+                darker: primaryFgVariants.darker,
+                darkest: primaryFgVariants.darkest,
+                },
+                bg: {
+                DEFAULT: primaryBgColor,
+                light: primaryBgVariants.light,
+                lighter: primaryBgVariants.lighter,
+                lightest: primaryBgVariants.lightest,
+                dark: primaryBgVariants.dark,
+                darker: primaryBgVariants.darker,
+                darkest: primaryBgVariants.darkest,
+                },
+            },
+
+            accent: {
+                bg: {
+                DEFAULT: accentBgColor,
+                light: accentBgVariants.light,
+                lighter: accentBgVariants.lighter,
+                lightest: accentBgVariants.lightest,
+                dark: accentBgVariants.dark,
+                darker: accentBgVariants.darker,
+                darkest: accentBgVariants.darkest,
+                },
+                fg: {
+                DEFAULT: accentFgColor,
+                light: accentFgVariants.light,
+                lighter: accentFgVariants.lighter,
+                lightest: accentFgVariants.lightest,
+                dark: accentFgVariants.dark,
+                darker: accentFgVariants.darker,
+                darkest: accentFgVariants.darkest,
+                }
+            },
+
+            default: {
+                bg: {
+                DEFAULT: defaultBgColor,
+                light: 'var(--md-default-bg-color--light)',
+                lighter: 'var(--md-default-bg-color--lighter)',
+                lightest: 'var(--md-default-bg-color--lightest)',
+                dark: defaultBgVariants.dark,
+                darker: defaultBgVariants.darker,
+                darkest: defaultBgVariants.darkest,
+                },
+                fg: {
+                DEFAULT: defaultFgColor,
+                light: 'var(--md-default-fg-color--light)',
+                lighter: 'var(--md-default-fg-color--lighter)',
+                lightest: 'var(--md-default-fg-color--lightest)',
+                dark: defaultFgVariants.dark,
+                darker: defaultFgVariants.darker,
+                darkest: defaultFgVariants.darkest,
+                }
+            },
+            },
+        },
+        keyframes: {
+        fadeInSlideInLeft: {
+            '0%': { opacity: '0', transform: 'translateX(-40px)' },
+            '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        fadeInSlideInRight: {
+            '0%': { opacity: '0', transform: 'translateX(+40px)' },
+            '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        fadeIn: {
+            '0%': { opacity: '0', transform: 'translateY(0px)' },
+            '25%': { opacity: '0', transform: 'translateY(0px)' },
+            '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        fadeInSlideInUp1: {
+            '0%': { opacity: '0', transform: 'translateY(+40px)' },
+            '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        fadeInSlideInUp2: {
+            '0%': { opacity: '0', transform: 'translateY(+20px)' },
+            '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        fadeInSlideInUp1Delay1: {
+            '0%': { opacity: '0', transform: 'translateY(+40px)' },
+            '50%': { opacity: '0', transform: 'translateY(+40px)' },
+            '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        fadeInSlideInUp1Delay2: {
+            '0%': { opacity: '0', transform: 'translateY(+40px)' },
+            '66%': { opacity: '0', transform: 'translateY(+40px)' },
+            '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        fadeInSlideInUpReady1: {
+            '0%': { opacity: '0', transform: 'translateY(+80px)' },
+            '50%': { opacity: '1', transform: 'translateY(+80px)' },
+            '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        fadeInSlideInUpReady2: {
+            '0%': { opacity: '0', transform: 'translateY(0px)' },
+            '50%': { opacity: '0', transform: 'translateY(0px)' },
+            '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        },
+        animation: {
+            fadeInSlideInLeft: 'fadeInSlideInLeft 0.8s ease-out forwards',
+            fadeInSlideInRight: 'fadeInSlideInRight 0.8s ease-out forwards',
+            fadeIn: 'fadeIn 2.0s ease-out forwards',
+            fadeInSlideInUp1: 'fadeInSlideInUp1 1.6s ease-out forwards',
+            fadeInSlideInUp2: 'fadeInSlideInUp1 1.6s ease-out forwards',
+            fadeInSlideInUp1Delay1: 'fadeInSlideInUp1Delay1 3.2s ease-out forwards',
+            fadeInSlideInUp1Delay2: 'fadeInSlideInUp1Delay2 4.8s ease-out forwards',
+            fadeInSlideInUpReady1: 'fadeInSlideInUpReady1 3.2s ease-out forwards',
+            fadeInSlideInUpReady2: 'fadeInSlideInUpReady2 5.2s ease-out forwards',
+        },
+        },
+    plugins: [],
+    },
+}
+}
+</script>
+
+<script>
+// Observe elements with a `data-animate` attribute
+  document.addEventListener("DOMContentLoaded", function () {
+    const observer = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            const animation = el.getAttribute("data-animate");
+
+            // Add animation and visibility classes
+            el.classList.add("opacity-100", "animate-" + animation);
+            observer.unobserve(el); // Only trigger once
+          }
+        });
+      },
+      {
+        threshold: 0.5 // Trigger when 10% visible
+      }
+    );
+
+    // Observe all target elements
+    document.querySelectorAll("[data-animate]").forEach(el => {
+      observer.observe(el);
+    });
+});
+
+window.addEventListener('load', () => {
+  const container = document.querySelector('.preload-hidden');
+  if (container) container.classList.remove('preload-hidden');
+});
+
+
+</script>
+<script>
+// Observe for videos tagged with data-play-when-visible and start them when visible
+  document.addEventListener("DOMContentLoaded", function () {
+    const observer = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach(entry => {
+        const video = entry.target;
+          if (entry.isIntersecting) {
+            video.play().catch(err => {
+                // optional: handle autoplay restrictions
+                console.log("Video play failed:", err);
+            });
+            observer.unobserve(video);    // only trigger once
+          }
+        //   else {
+        //       video.pause().catch(err => {
+        //           // optional: handle autoplay restrictions
+        //           console.log("Video pause failed:", err);
+        //       });
+        //       // observer.unobserve(video);    // only trigger once
+        //     }
+        });
+      },
+      {
+        threshold: 0.8
+      }
+    );
+
+    // Observe all target elements
+    document.querySelectorAll("[data-play-when-visible]").forEach(el => {
+      observer.observe(el);
+    });
+});
+
+</script>
+
+
+<script>
+    const playBtnPath = "M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm4.879-2.773 4.264 2.559a.25.25 0 0 1 0 .428l-4.264 2.559A.25.25 0 0 1 6 10.559V5.442a.25.25 0 0 1 .379-.215Z"
+    const pauseBtnPath = "M5 2h1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1Zm5 0h1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1Z"
+
+  function togglePlayPause(videoId) {
+    btnElementId = videoId + "-playpausebtn";
+    btnElement = document.getElementById(btnElementId);
+    const video = document.getElementById(videoId);
+    const svgPath = btnElement.querySelector("path");
+
+    if (video.paused) {
+        video.play();
+        svgPath.setAttribute("d", pauseBtnPath);
+    } else {
+        video.pause();
+        svgPath.setAttribute("d", playBtnPath);
+    }
+  }
+
+  function restartAndPlayVideo(videoId) {
+    const video = document.getElementById(videoId);
+
+    video.currentTime = 0;
+    if (video.paused) {
+        togglePlayPause(videoId);
+    }
+
+
+  }
+
+</script>
+
+<style>
+/* .invisible-before-animate {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.manual-opacity-0 { opacity: 0; } */
+.preload-hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
+code {
+    background-color: rgba(255, 255, 255, 0.05); /* white with 90% opacity */
+    border-radius: 4px; /* rounded corners */
+    padding: 1px 4px;       /* optional padding */
+    display: inline-block;  /* so it wraps text nicely */
+}
+
+.mono {
+    font-style: "Jetbains Mono";
+}
+
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+    <div class="" style="height: 0;">
+        
+        <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+            <div class="md-sidebar__scrollwrap">
+            <div class="md-sidebar__inner">
+                
 
 
   
@@ -511,7 +903,7 @@
   
   
     <li class="md-nav__item">
-      <a href="vision-requirements/" class="md-nav__link">
+      <a href="objectives/" class="md-nav__link">
         
   
   
@@ -536,406 +928,13 @@
     
   </ul>
 </nav>
-                    </div>
-                  </div>
-                </div>
-              
-            
-<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
-          </div>
-        </main>
+            </div>
+            </div>
+        </div>
         
-<style>
-    .md-header {
-        --md-primary-fg-color: #00000000; /* Override for just this header */
-    }
-
-    .md-header--shadow {
-        box-shadow: none;
-        transition: none;
-    }
-</style>
-
-<script>
-// Function to convert hex to RGB
-function hexToRgb(hex) {
-    hex = hex.replace('#', '');
-    const bigint = parseInt(hex, 16);
-    const r = (bigint >> 16) & 255;
-    const g = (bigint >> 8) & 255;
-    const b = bigint & 255;
-    return [r, g, b];
-}
-
-// Function to convert RGB to HSL
-function rgbToHsl(r, g, b) {
-    r /= 255;
-    g /= 255;
-    b /= 255;
-
-    const max = Math.max(r, g, b);
-    const min = Math.min(r, g, b);
-    let h, s, l = (max + min) / 2;
-
-    if (max === min) {
-        h = s = 0; // achromatic
-    } else {
-        const d = max - min;
-        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-        switch (max) {
-            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-            case g: h = (b - r) / d + 2; break;
-            case b: h = (r - g) / d + 4; break;
-        }
-        h /= 6;
-    }
-
-    return [h * 360, s * 100, l * 100];  // HSL values
-}
-
-// Function to lighten/darken HSL color
-function adjustLightness(h, s, l, amount) {
-    l = l + amount; // Adjust lightness by the given amount
-    l = Math.min(Math.max(0, l), 100); // Clamp lightness to 0-100
-    return `hsl(${h}, ${s}%, ${l}%)`;
-}
-
-// Function to get lighter and darker variants of a color
-function getColorVariants(hexColor, lightnessAdjustment = 15) {
-    // Convert hex to RGB
-    const rgb = hexToRgb(hexColor);
     
-    // Convert RGB to HSL
-    const [h, s, l] = rgbToHsl(...rgb);
-
-    // Calculate variants by adjusting the lightness
-    const lightVariant = adjustLightness(h, s, l, lightnessAdjustment);        // Lighten by lightnessAdjustment
-    const lighterVariant = adjustLightness(h, s, l, lightnessAdjustment * 2);  // More lightened
-    const lightestVariant = adjustLightness(h, s, l, lightnessAdjustment * 3);  // Maximum lightened
-
-    const darkVariant = adjustLightness(h, s, l, -lightnessAdjustment);         // Darken by lightnessAdjustment
-    const darkerVariant = adjustLightness(h, s, l, -(lightnessAdjustment * 2)); // More darkened
-    const darkestVariant = adjustLightness(h, s, l, -(lightnessAdjustment * 3)); // Maximum darkened
-
-    return {
-        light: lightVariant,
-        lighter: lighterVariant,
-        lightest: lightestVariant,
-        dark: darkVariant,
-        darker: darkerVariant,
-        darkest: darkestVariant
-    };
-}
-// Function to retrieve a color from the CSS variables
-function getCssVarColor(varName) {
-    return getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
-}
-
-window.onload = () => {
-    // Example of getting CSS variables for primary and accent colors
-    var primaryFgColor = getCssVarColor('--md-primary-fg-color');
-    var primaryBgColor = getCssVarColor('--md-primary-bg-color');
-    
-    var accentFgColor = getCssVarColor('--md-accent-fg-color');
-    var accentBgColor = getCssVarColor('--md-accent-bg-color');
-
-    var defaultFgColor = getCssVarColor('--md-default-fg-color');
-    var defaultBgColor = getCssVarColor('--md-default-bg-color');
-
-    // Get the lighter and darker variants of each color
-    var primaryFgVariants = getColorVariants(primaryFgColor);
-    var primaryBgVariants = getColorVariants(primaryBgColor);
-    var accentFgVariants = getColorVariants(accentFgColor);
-    var accentBgVariants = getColorVariants(accentBgColor);
-    var defaultFgVariants = getColorVariants(accentFgColor);
-    var defaultBgVariants = getColorVariants(accentBgColor);
-
-    console.log(primaryFgVariants)
-    console.log(primaryBgVariants)
-
-    console.log(accentFgVariants)
-    console.log(accentBgVariants)
-
-    console.log(defaultFgVariants)
-    console.log(defaultBgVariants)
-
-    tailwind.config = {
-    content: [],
-    // important: '.tw', // 🔥 Scope all Tailwind utilities to `.tw`
-    theme: {
-        safelist: [
-            'animate-fadeInSlideInLeft',
-            'animate-fadeInSlideInRight',
-            'opacity-0',
-            'opacity-100'
-        ],
-        extend: {
-        fontFamily: {
-            mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
-        },
-        colors: {
-            
-            text: 'var(--md-default-fg-color)',
-            background: 'var(--md-default-bg-color)',
-            codebg: 'var(--md-code-bg-color)',
-            
-            md: {
-            primary: {
-                fg: {
-                DEFAULT: primaryFgColor,
-                light: primaryFgVariants.light,
-                lighter: primaryFgVariants.lighter,
-                lightest: primaryFgVariants.lightest,
-                dark: primaryFgVariants.dark,
-                darker: primaryFgVariants.darker,
-                darkest: primaryFgVariants.darkest,
-                },
-                bg: {
-                DEFAULT: primaryBgColor,
-                light: primaryBgVariants.light,
-                lighter: primaryBgVariants.lighter,
-                lightest: primaryBgVariants.lightest,
-                dark: primaryBgVariants.dark,
-                darker: primaryBgVariants.darker,
-                darkest: primaryBgVariants.darkest,
-                },
-            },
-
-            accent: {
-                bg: {
-                DEFAULT: accentBgColor,
-                light: accentBgVariants.light,
-                lighter: accentBgVariants.lighter,
-                lightest: accentBgVariants.lightest,
-                dark: accentBgVariants.dark,
-                darker: accentBgVariants.darker,
-                darkest: accentBgVariants.darkest,
-                },
-                fg: {
-                DEFAULT: accentFgColor,
-                light: accentFgVariants.light,
-                lighter: accentFgVariants.lighter,
-                lightest: accentFgVariants.lightest,
-                dark: accentFgVariants.dark,
-                darker: accentFgVariants.darker,
-                darkest: accentFgVariants.darkest,
-                }
-            },
-
-            default: {
-                bg: {
-                DEFAULT: defaultBgColor,
-                light: 'var(--md-default-bg-color--light)',
-                lighter: 'var(--md-default-bg-color--lighter)',
-                lightest: 'var(--md-default-bg-color--lightest)',
-                dark: defaultBgVariants.dark,
-                darker: defaultBgVariants.darker,
-                darkest: defaultBgVariants.darkest,
-                },
-                fg: {
-                DEFAULT: defaultFgColor,
-                light: 'var(--md-default-fg-color--light)',
-                lighter: 'var(--md-default-fg-color--lighter)',
-                lightest: 'var(--md-default-fg-color--lightest)',
-                dark: defaultFgVariants.dark,
-                darker: defaultFgVariants.darker,
-                darkest: defaultFgVariants.darkest,
-                }
-            },
-            },
-        },
-        keyframes: {
-        fadeInSlideInLeft: {
-            '0%': { opacity: '0', transform: 'translateX(-40px)' },
-            '100%': { opacity: '1', transform: 'translateX(0)' },
-        },
-        fadeInSlideInRight: {
-            '0%': { opacity: '0', transform: 'translateX(+40px)' },
-            '100%': { opacity: '1', transform: 'translateX(0)' },
-        },
-        fadeIn: {
-            '0%': { opacity: '0', transform: 'translateY(0px)' },
-            '25%': { opacity: '0', transform: 'translateY(0px)' },
-            '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
-        fadeInSlideInUp1: {
-            '0%': { opacity: '0', transform: 'translateY(+40px)' },
-            '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
-        fadeInSlideInUp2: {
-            '0%': { opacity: '0', transform: 'translateY(+20px)' },
-            '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
-        fadeInSlideInUp1Delay1: {
-            '0%': { opacity: '0', transform: 'translateY(+40px)' },
-            '50%': { opacity: '0', transform: 'translateY(+40px)' },
-            '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
-        fadeInSlideInUp1Delay2: {
-            '0%': { opacity: '0', transform: 'translateY(+40px)' },
-            '66%': { opacity: '0', transform: 'translateY(+40px)' },
-            '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
-        fadeInSlideInUpReady1: {
-            '0%': { opacity: '0', transform: 'translateY(+80px)' },
-            '50%': { opacity: '1', transform: 'translateY(+80px)' },
-            '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
-        fadeInSlideInUpReady2: {
-            '0%': { opacity: '0', transform: 'translateY(0px)' },
-            '50%': { opacity: '0', transform: 'translateY(0px)' },
-            '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
-        },
-        animation: {
-            fadeInSlideInLeft: 'fadeInSlideInLeft 0.8s ease-out forwards',
-            fadeInSlideInRight: 'fadeInSlideInRight 0.8s ease-out forwards',
-            fadeIn: 'fadeIn 2.0s ease-out forwards',
-            fadeInSlideInUp1: 'fadeInSlideInUp1 1.6s ease-out forwards',
-            fadeInSlideInUp2: 'fadeInSlideInUp1 1.6s ease-out forwards',
-            fadeInSlideInUp1Delay1: 'fadeInSlideInUp1Delay1 3.2s ease-out forwards',
-            fadeInSlideInUp1Delay2: 'fadeInSlideInUp1Delay2 4.8s ease-out forwards',
-            fadeInSlideInUpReady1: 'fadeInSlideInUpReady1 3.2s ease-out forwards',
-            fadeInSlideInUpReady2: 'fadeInSlideInUpReady2 5.2s ease-out forwards',
-        },
-        },
-    plugins: [],
-    },
-}
-}
-</script>
-
-<script>
-// Observe elements with a `data-animate` attribute
-  document.addEventListener("DOMContentLoaded", function () {
-    const observer = new IntersectionObserver(
-      (entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const el = entry.target;
-            const animation = el.getAttribute("data-animate");
-
-            // Add animation and visibility classes
-            el.classList.add("opacity-100", "animate-" + animation);
-            observer.unobserve(el); // Only trigger once
-          }
-        });
-      },
-      {
-        threshold: 0.5 // Trigger when 10% visible
-      }
-    );
-
-    // Observe all target elements
-    document.querySelectorAll("[data-animate]").forEach(el => {
-      observer.observe(el);
-    });
-});
-
-window.addEventListener('load', () => {
-  const container = document.querySelector('.preload-hidden');
-  if (container) container.classList.remove('preload-hidden');
-});
-
-
-</script>
-<script>
-// Observe for videos tagged with data-play-when-visible and start them when visible
-  document.addEventListener("DOMContentLoaded", function () {
-    const observer = new IntersectionObserver(
-      (entries, observer) => {
-        entries.forEach(entry => {
-        const video = entry.target;
-          if (entry.isIntersecting) {
-            video.play().catch(err => {
-                // optional: handle autoplay restrictions
-                console.log("Video play failed:", err);
-            });
-            observer.unobserve(video);    // only trigger once
-          }
-        //   else {
-        //       video.pause().catch(err => {
-        //           // optional: handle autoplay restrictions
-        //           console.log("Video pause failed:", err);
-        //       });
-        //       // observer.unobserve(video);    // only trigger once
-        //     }
-        });
-      },
-      {
-        threshold: 0.8
-      }
-    );
-
-    // Observe all target elements
-    document.querySelectorAll("[data-play-when-visible]").forEach(el => {
-      observer.observe(el);
-    });
-});
-
-</script>
-
-
-<script>
-    const playBtnPath = "M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm4.879-2.773 4.264 2.559a.25.25 0 0 1 0 .428l-4.264 2.559A.25.25 0 0 1 6 10.559V5.442a.25.25 0 0 1 .379-.215Z"
-    const pauseBtnPath = "M5 2h1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1Zm5 0h1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1Z"
-
-  function togglePlayPause(videoId) {
-    btnElementId = videoId + "-playpausebtn";
-    btnElement = document.getElementById(btnElementId);
-    const video = document.getElementById(videoId);
-    const svgPath = btnElement.querySelector("path");
-
-    if (video.paused) {
-        video.play();
-        svgPath.setAttribute("d", pauseBtnPath);
-    } else {
-        video.pause();
-        svgPath.setAttribute("d", playBtnPath);
-    }
-  }
-
-  function restartAndPlayVideo(videoId) {
-    const video = document.getElementById(videoId);
-
-    video.currentTime = 0;
-    if (video.paused) {
-        togglePlayPause(videoId);
-    }
-
-
-  }
-
-</script>
-
-<style>
-/* .invisible-before-animate {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-.manual-opacity-0 { opacity: 0; } */
-.preload-hidden {
-  visibility: hidden;
-  opacity: 0;
-}
-
-code {
-    background-color: rgba(255, 255, 255, 0.05); /* white with 90% opacity */
-    border-radius: 4px; /* rounded corners */
-    padding: 1px 4px;       /* optional padding */
-    display: inline-block;  /* so it wraps text nicely */
-}
-
-.mono {
-    font-style: "Jetbains Mono";
-}
-
-</style>
-
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
-
-<script src="https://cdn.tailwindcss.com"></script>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+    </div>
 
 
 <div class="md-content relative isolate preload-hidden">
@@ -1683,7 +1682,7 @@ code {
     interact directly with applications such as Excel, Word and Powerpoint.
 </p>
 <p>
-    Maybe you can finally automate all those tedious tasks in a modern, simple, and robust language...
+    Maybe noow you can automate that tedious task - all in a modern, simple, and robust language.
 </p>
 
 
