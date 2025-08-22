@@ -968,6 +968,20 @@
   Your browser does not support the video tag.
 </video>
 
+<details class="tip" open="open">
+<summary>Syntax Highlighting</summary>
+<p>The key advantage of developing code in VSCode is to have access to a language server for. This is the background service in IDEs which enables syntax highlighting, code completion, often called 'Intellisense'. This dramatically increases how quickly code can be written if used properly!</p>
+<p>Enabling syntax highlighting for xlpro projects is simple, but requires a couple of steps to correctly configure. VSCode needs to know which Python interpreter xlpro is using for each project, and needs a trivial nudge to ensure it is looking in the right place.</p>
+<p>Open the xlpro project in VSCode using the <code>Develop</code> button. In VSCode,  open the <code>Command Pallette</code> (<code>ctrl</code> + <code>shift</code> + <code>p</code>) and find and click the option <code>&gt; Python: Clear Workspace Interpreter Setting</code>.</p>
+<p>Creating a new terminal in VSCode via <code>Terminal</code> &gt; <code>New</code> (or <code>ctrl</code> + <code>shift</code> + <code>'</code>) <em>should</em> automatically activate the xlpro virtual environment if VSCode is looking at the right interpreter. </p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>xlpro-Showcase.xlsx.xlpro&gt;<span class="w"> </span><span class="p">&amp;</span><span class="w"> </span><span class="s2">&quot;C:/Users/Daniel Evans/.xlpro/envs/2025-08-22_Py-3.13.2/.venv/scripts/Activate.ps1&quot;</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="o">(</span>.venv<span class="o">)</span><span class="w"> </span>xlpro-Showcase.xlsx.xlpro&gt;<span class="w"> </span>
+</span></code></pre></div>
+<p>You can see in this example it is calling a <code>/.xlpro/envs/...</code> path - this is the unique interpreter we just configured for this workbook. This is how you can easily <code>pip install</code> new packages or otherwise manage the interpreter.</p>
+<p>If the above still didn't work for you, run the command pallette <code>&gt; Python: Select Interpreter</code> option and select <code>use Python from 'python.defaultInterpreterPath'</code> setting; this will guarantee it is overridden.</p>
+<p>Even once it is correctly configured, you may notice that the language server/syntax highlighting is not working. To resolve this: in the command pallette, run <code>&gt; Python: Restart Language Server</code> to ensure the language server is looking at the correct interpreter
+<br></p>
+</details>
 <hr />
 <h2 id="showcase">Showcase</h2>
 <p>Once you have the basics up and running, refer to this guide to see the bundled showcase example project in action. This guide covers:</p>
